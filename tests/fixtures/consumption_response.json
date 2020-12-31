@@ -1,0 +1,22 @@
+{
+  "count": 48,
+  "next": null,
+  "previous": null,
+  "results": [
+    {
+      "consumption": 0.063,
+      "interval_start": "2018-05-19T00:30:00+0100",
+      "interval_end": "2018-05-19T01:00:00+0100"
+    },
+    {
+      "consumption": 0.071,
+      "interval_start": "2018-05-19T00:00:00+0100",
+      "interval_end": "2018-05-19T00:30:00+0100"
+    },
+    {
+      "consumption": 0.073,
+      "interval_start": "2018-05-18T23:30:00+0100",
+      "interval_end": "2018-05-18T00:00:00+0100"
+    }
+  ]
+}
