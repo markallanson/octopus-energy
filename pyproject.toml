@@ -1,9 +1,12 @@
 [tool.poetry]
 name = "octopus-energy"
-version = "0.1.0"
+version = "0.1.1"
 description = "Python client for the Octopus Energy RESTful API"
 authors = ["Mark Allanson <mark@allanson.org>"]
 license = "MIT"
+readme = "readme.md"
+homepage="https://github.com/markallanson/octopus-energy"
+include=["*.md"]
 
 [tool.poetry.dependencies]
 python = "^3.7"
