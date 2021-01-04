@@ -1,11 +1,11 @@
 from http import HTTPStatus
-from typing import Any
+from typing import Any, Callable
 
-import requests
-from requests.auth import HTTPBasicAuth
+import aiohttp
+from aiohttp import BasicAuth
 
 from octopus_energy.models import UnitType, Consumption, MeterType
-from octopus_energy.exceptions import ApiError, ApiAuthenticationError
+from octopus_energy.exceptions import ApiError, ApiAuthenticationError, ApiNotFoundError
 from octopus_energy.mappers import consumption_from_response
 
 _API_BASE = "https://api.octopus.energy"
@@ -15,10 +15,10 @@ class OctopusEnergyClient:
     """A client for interacting with the Octopus Energy RESTful API."""
 
     def __init__(self, api_token, default_unit: UnitType = UnitType.KWH):
-        self.auth = HTTPBasicAuth(api_token, "")
+        self.auth = BasicAuth(api_token, "")
         self.default_unit = default_unit
 
-    def get_gas_consumption_v1(
+    async def get_gas_consumption_v1(
         self, mprn, serial_number, meter_type: MeterType, desired_unit_type: UnitType = UnitType.KWH
     ) -> Consumption:
         """Gets the consumption of gas from a specific meter.
@@ -36,15 +36,14 @@ class OctopusEnergyClient:
             The consumption of gas for the meter.
 
         """
-        return self._execute(
-            requests.get,
+        return await self._execute(
             f"v1/gas-meter-points/{mprn}/meters/{serial_number}/consumption/",
             consumption_from_response,
             meter_type=meter_type,
             desired_unit_type=desired_unit_type,
         )
 
-    def get_electricity_consumption_v1(
+    async def get_electricity_consumption_v1(
         self,
         mpan: str,
         serial_number: str,
@@ -66,19 +65,21 @@ class OctopusEnergyClient:
             The consumption of gas for the meter.
 
         """
-        return self._execute(
-            requests.get,
+        return await self._execute(
             f"v1/electricity-meter-points/{mpan}/meters/{serial_number}/consumption/",
             consumption_from_response,
             meter_type=meter_type,
             desired_unit_type=desired_unit_type,
         )
 
-    def _execute(self, func, url: str, response_mapper, **kwargs) -> Any:
+    async def _execute(self, url: str, response_mapper: Callable[[dict], Any], **kwargs) -> Any:
         """Executes an API call to Octopus energy and maps the response."""
-        response = func(f"{_API_BASE}/{url}", auth=self.auth)
-        if not response.ok:
-            if response.status_code == HTTPStatus.UNAUTHORIZED:
-                raise ApiAuthenticationError()
-            raise ApiError("Error", response=response)
-        return response_mapper(response, **kwargs)
+        async with aiohttp.ClientSession(auth=self.auth) as session:
+            response = await session.get(f"{_API_BASE}/{url}")
+            if response.status > 399:
+                if response.status == HTTPStatus.UNAUTHORIZED:
+                    raise ApiAuthenticationError()
+                if response.status == HTTPStatus.NOT_FOUND:
+                    raise ApiNotFoundError()
+                raise ApiError(response, "API Call Failed")
+            return response_mapper(await response.json(), **kwargs)

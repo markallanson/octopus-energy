@@ -63,6 +63,6 @@ class IntervalConsumption:
 class Consumption:
     """Consumption of energy for a list of time intervals."""
 
-    unit: UnitType
-    meter: MeterType
+    unit_type: UnitType
+    meter_type: MeterType
     intervals: List[IntervalConsumption] = field(default_factory=lambda: [])
