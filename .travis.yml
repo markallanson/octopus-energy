@@ -4,16 +4,16 @@ dist: focal
 matrix:
   fast_finish: true
   include:
-  - python: "3.7"
-    env: TOXENV=py37
-  - python: "3.8"
-    env: TOXENV=py38
-  - python: "3.9"
-    env: TOXENV=py39
-  - python: "3.9"
-    env: TOXENV=black
-  - python: "3.9"
-    env: TOXENV=flake8
+    - python: '3.7'
+      env: TOXENV=py37
+    - python: '3.8'
+      env: TOXENV=py38
+    - python: '3.9'
+      env: TOXENV=py39
+    - python: '3.9'
+      env: TOXENV=black
+    - python: '3.9'
+      env: TOXENV=flake8
 install:
   - pip install -U tox coveralls
 script:
@@ -22,13 +22,14 @@ cache: pip
 after_success:
   - coveralls
 deploy:
-  provider: pypi
-  username: __token__
-  password:
-    secure: jCGRp6jvdDU0Vkd3gTME1AFvRytRr/jfz4GSd9BDLOx9pOct0PHHu4gEMmpvBzNVEgQoPNJgjVEd5wRVN8v2MrRGPUfF1dD0r4sVeHufj+jVldcdwNT8o704CHdTDQjnrLCR3A6ZePpX23zEAoMzNSJp1L5Pe2HqLiqaoByV99flxrQTYXiYvKda0mpnLw08vAzdrQ+eZgEQxp+CC3IHygIsLtMF5vY/k/HYqVrvOfpxln9FM4WiEX4QTy9MJZABMRM2QMsREaRDbk4zGlUC045Q8dy0pOeIJqpCJMpSoDsp+RpHeOLc8qsUZcrLmZQgoZrVLiF7V0ENXENnThJ4Qf3ShPt2bV7JGqQ1PvpddYxO4zHAirPUhsFxFY7m0oo8Zpj2pEdsxGdHfRAOITA9yhVpc/8GcymgJGd5Sxt9diiY0YEfJh2QsVq8geeJbtIw++FuhRXHo7nT/egYuJeI03B//Xz6h7WT6SgSiiUfnkNuXhMoA0bEe44GwvqdJ6BRZDXTMIqOIlGWTa/hlqEDetEAcRx00MUge9asVU+nCrxzKvhC0HKqAsPwY+nwiKgsy4XbTcuOyQ44UWWy4r9wU83tItEg+/7UpzyRKGP6GbIe0J6L24r9/MiXYKUzDRl6bSoLnY3/LIdscZUTvQ4LGGuyTdROAsg4yEEAKOyYc3A=
+  provider: script
+  script: poetry publish --build -r markallanson/octopus-energy
   on:
     tags: true
     branch: main
     repo: markallanson/octopus-energy
-  distributions: "sdist bdist_wheel"
+    python: '3.7'
   skip_existing: true
+env:
+  global:
+    secure: l9fzsnHL4PkxofsiEmFoHMMQvcw3Z+4H87qXKsKYvdTLMMkACJMRmlfaj9nXgJUmvjc7A30cjBhKtIyeqLDIrvh5QgQsCVJBmGS5+l5BYZ7pbNl/y+L5PMMdcu39/HOgLZQuCfYLMujGNP39WrTx+D4iw8U2wYJBEkjkjCIvKmLJtzGTGCeiXXJOm62pMXFOPKmwIAhY3obOEz3j8KDbtuctIBTEus1dryIlD1lOL16t7CFfeHrt//fX5nyzWDaYUkBd+u647bBkmvVznzrsk1qrn6VvjwxVIcpZsRaoXYMi6mmATvPviug8QZIi0BAUgRfcJanJmqtwcGZXApWSke8Y/Z5YAqSXe+U1mN/tXpzXFSnX4NkFtAdV8wAVz8ndXoxRFvvXdUlnnl8chL8zbAvg/3KzHQdP9kSj4T56xfBQqHGfp+9JPhTBaAbZ0QVz9VaEtTUw/0X/ztzq55w+yUJRmvwsSI6PgBiCaVGnLIPSUak7MZl8so6kFV7OE0+uwSLaeJUSejFKvIkSHbgeeMIJnFv55swgL63CS7Z4aHMp/kmgDQFZsBlasMAIAdy6IEFxqALgSGD7XOnHM/RpJoo7fZ+uo0HxS035vk6KB6J+dz/ay2JswjlWiolPShqlCAz9mcH/dW9kIvRBLlMiUXW38stdyx5MxQki/DntR0c=
