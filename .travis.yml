@@ -23,7 +23,7 @@ after_success:
   - coveralls
 deploy:
   provider: script
-  script: poetry publish --build -r markallanson/octopus-energy
+  script: poetry publish --build
   on:
     tags: true
     branch: main
