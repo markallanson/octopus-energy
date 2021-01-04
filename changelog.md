@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.1.2
+* Convert API to be async
+* Remove requests library dependencies
+
 # 0.1.1 
 * Changelog, Packaging Updates
 

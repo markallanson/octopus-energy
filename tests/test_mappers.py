@@ -1,7 +1,5 @@
-import json
 from datetime import datetime
 from unittest import TestCase
-from unittest.mock import Mock
 
 from dateutil.tz import tzoffset
 
@@ -10,18 +8,17 @@ from octopus_energy.mappers import (
     consumption_from_response,
 )
 from octopus_energy.models import UnitType, MeterType
-from tests import load_fixture
+from tests import load_fixture_json
 
 
 class TestMappers(TestCase):
     def test_smets1_gas_mapping_kwh(self):
-        response = Mock()
-        response.json.return_value = json.loads(load_fixture("consumption_response.json"))
+        response = load_fixture_json("consumption_response.json")
         consumption = consumption_from_response(response, MeterType.SMETS1_GAS, UnitType.KWH)
         with self.subTest("interval count"):
             self.assertEqual(len(consumption.intervals), 3, "Contains 3 periods of consumption")
         with self.subTest("units"):
-            self.assertEqual(consumption.unit, UnitType.KWH)
+            self.assertEqual(consumption.unit_type, UnitType.KWH)
         with self.subTest("first interval consumption"):
             self.assertEqual(consumption.intervals[0].consumed_units, 0.063)
         with self.subTest("first interval start"):
@@ -36,24 +33,22 @@ class TestMappers(TestCase):
             )
 
     def test_smets1_gas_mapping_cubic_meters(self):
-        response = Mock()
-        response.json.return_value = json.loads(load_fixture("consumption_response.json"))
+        response = load_fixture_json("consumption_response.json")
         consumption = consumption_from_response(
             response, MeterType.SMETS1_GAS, UnitType.CUBIC_METERS
         )
         with self.subTest("units"):
-            self.assertEqual(consumption.unit, UnitType.CUBIC_METERS)
+            self.assertEqual(consumption.unit_type, UnitType.CUBIC_METERS)
         with self.subTest("first interval consumption (in cubic meters)"):
             self.assertEqual(consumption.intervals[0].consumed_units, 0.0056316372868023025)
 
     def test_smets2_gas_mapping_kwh(self):
-        response = Mock()
-        response.json.return_value = json.loads(load_fixture("consumption_response.json"))
+        response = load_fixture_json("consumption_response.json")
         consumption = consumption_from_response(response, MeterType.SMETS2_GAS, UnitType.KWH)
         with self.subTest("interval count"):
             self.assertEqual(len(consumption.intervals), 3, "Contains 3 periods of consumption")
         with self.subTest("units"):
-            self.assertEqual(consumption.unit, UnitType.KWH)
+            self.assertEqual(consumption.unit_type, UnitType.KWH)
         with self.subTest("first interval consumption (converted to kwh)"):
             self.assertEqual(consumption.intervals[0].consumed_units, 0.7047684)
         with self.subTest("first interval start"):
@@ -68,26 +63,24 @@ class TestMappers(TestCase):
             )
 
     def test_smets2_gas_mapping_cubic_meters(self):
-        response = Mock()
-        response.json.return_value = json.loads(load_fixture("consumption_response.json"))
+        response = load_fixture_json("consumption_response.json")
         consumption = consumption_from_response(
             response, MeterType.SMETS2_GAS, UnitType.CUBIC_METERS
         )
         with self.subTest("units"):
-            self.assertEqual(consumption.unit, UnitType.CUBIC_METERS)
+            self.assertEqual(consumption.unit_type, UnitType.CUBIC_METERS)
         with self.subTest("first interval consumption (converted to kwh)"):
             self.assertEqual(consumption.intervals[0].consumed_units, 0.063)
 
     def test_smets1_elec_mapping(self):
-        response = Mock()
-        response.json.return_value = json.loads(load_fixture("consumption_response.json"))
+        response = load_fixture_json("consumption_response.json")
         consumption = consumption_from_response(
             response, MeterType.SMETS1_ELECTRICITY, UnitType.KWH
         )
         with self.subTest("interval count"):
             self.assertEqual(len(consumption.intervals), 3, "Contains 3 periods of consumption")
         with self.subTest("units"):
-            self.assertEqual(consumption.unit, UnitType.KWH)
+            self.assertEqual(consumption.unit_type, UnitType.KWH)
         with self.subTest("first interval consumption (converted to kwh)"):
             self.assertEqual(consumption.intervals[0].consumed_units, 0.063)
         with self.subTest("first interval start"):
@@ -102,15 +95,14 @@ class TestMappers(TestCase):
             )
 
     def test_smets2_elec_mapping(self):
-        response = Mock()
-        response.json.return_value = json.loads(load_fixture("consumption_response.json"))
+        response = load_fixture_json("consumption_response.json")
         consumption = consumption_from_response(
             response, MeterType.SMETS2_ELECTRICITY, UnitType.KWH
         )
         with self.subTest("interval count"):
             self.assertEqual(len(consumption.intervals), 3, "Contains 3 periods of consumption")
         with self.subTest("units"):
-            self.assertEqual(consumption.unit, UnitType.KWH)
+            self.assertEqual(consumption.unit_type, UnitType.KWH)
         with self.subTest("first interval consumption (converted to kwh)"):
             self.assertEqual(consumption.intervals[0].consumed_units, 0.063)
         with self.subTest("first interval start"):
@@ -125,30 +117,24 @@ class TestMappers(TestCase):
             )
 
     def test_consumption_no_intervals(self):
-        response = Mock()
-        response.json.return_value = json.loads(
-            load_fixture("consumption_no_results_response.json")
-        )
+        response = load_fixture_json("consumption_no_results_response.json")
         consumption = consumption_from_response(
             response, meter_type=MeterType.SMETS1_GAS, desired_unit_type=UnitType.KWH
         )
         with self.subTest("interval count"):
             self.assertEqual(len(consumption.intervals), 0, "Contains 0 periods of consumption")
         with self.subTest("units"):
-            self.assertEqual(consumption.unit, UnitType.KWH)
+            self.assertEqual(consumption.unit_type, UnitType.KWH)
 
     def test_consumption_missing_intervals(self):
-        response = Mock()
-        response.json.return_value = json.loads(
-            load_fixture("consumption_missing_results_response.json")
-        )
+        response = load_fixture_json("consumption_missing_results_response.json")
         consumption = consumption_from_response(
             response, meter_type=MeterType.SMETS1_GAS, desired_unit_type=UnitType.KWH
         )
         with self.subTest("interval count"):
             self.assertEqual(len(consumption.intervals), 0, "Contains 0 periods of consumption")
         with self.subTest("units"):
-            self.assertEqual(consumption.unit, UnitType.KWH)
+            self.assertEqual(consumption.unit_type, UnitType.KWH)
 
 
 class TestUnitConversion(TestCase):

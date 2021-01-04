@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "octopus-energy"
-version = "0.1.1"
+version = "0.1.2"
 description = "Python client for the Octopus Energy RESTful API"
 authors = ["Mark Allanson <mark@allanson.org>"]
 license = "MIT"
@@ -10,8 +10,8 @@ include=["*.md"]
 
 [tool.poetry.dependencies]
 python = "^3.7"
-requests = "^2.25.1"
 python-dateutil = "^2.8.1"
+aiohttp = "^3.7.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.1"
@@ -19,6 +19,7 @@ requests-mock = "^1.8.0"
 black = "^20.8b1"
 flake8 = "^3.8.4"
 tox = "^3.20.1"
+aioresponses = "^0.7.1"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

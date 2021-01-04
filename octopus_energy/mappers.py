@@ -1,5 +1,4 @@
 from dateutil.parser import isoparse
-from requests import Response
 
 from octopus_energy.models import IntervalConsumption, UnitType, Consumption, MeterType
 
@@ -12,7 +11,7 @@ _UNIT_MULTIPLIERS = {
 
 
 def consumption_from_response(
-    response: Response, meter_type: MeterType, desired_unit_type: UnitType
+    response: dict, meter_type: MeterType, desired_unit_type: UnitType
 ) -> Consumption:
     """Generates the Consumption model from an octopus energy API response.
 
@@ -26,9 +25,8 @@ def consumption_from_response(
         The Consumption model for the period of time represented in the response.
 
     """
-    response_json = response.json()
-    if "results" not in response_json:
-        return Consumption(unit=desired_unit_type, meter_type=meter_type)
+    if "results" not in response:
+        return Consumption(unit_type=desired_unit_type, meter_type=meter_type)
     return Consumption(
         desired_unit_type,
         meter_type,
@@ -40,7 +38,7 @@ def consumption_from_response(
                 interval_start=isoparse(result["interval_start"]),
                 interval_end=isoparse(result["interval_end"]),
             )
-            for result in response_json["results"]
+            for result in response["results"]
         ],
     )
 

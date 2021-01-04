@@ -2,4 +2,4 @@
 
 from .client import OctopusEnergyClient
 from .models import Consumption, IntervalConsumption, MeterType, UnitType
-from .exceptions import ApiError, ApiAuthenticationError
+from .exceptions import ApiAuthenticationError, ApiError, ApiNotFoundError

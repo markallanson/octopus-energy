@@ -1,6 +1,9 @@
 # Octopus Energy Python API Client Library
 A Client library for accessing the Octopus Energy APIs
 
+***Warning: The API is currently undergoing active development and should be considered unstable,
+even volatile until it reaches version 1.0.0***
+
 [![PyPI version](https://badge.fury.io/py/octopus-energy.svg)](https://badge.fury.io/py/octopus-energy)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/octopus-energy)
 
@@ -18,6 +21,7 @@ pip install octopus-energy
 The code is available in the [octopus-energy repository on GitHub][github]
 
 ## Features
+
 * Get energy consumption from SMETS1 and SMETS2 electricity and gas meters.
 
 ## Quickstart
@@ -32,7 +36,7 @@ mprn = "your-mprn"
 serial_number = "your-meter-serial-number"
 
 client = OctopusEnergyClient(api_token)
-consumption = client.get_gas_consumption_v1(mprn, serial_number, MeterType.SMETS1_GAS)
+consumption = await client.get_gas_consumption_v1(mprn, serial_number, MeterType.SMETS1_GAS)
 ```
 
 [github]: https://github.com/markallanson/octopus-energy
