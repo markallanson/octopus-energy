@@ -23,7 +23,7 @@ after_success:
   - coveralls
 deploy:
   provider: script
-  script: poetry publish --build
+  script: poetry publish --build -u __token__ -p $POETRY_PYPI_TOKEN_PYPI
   on:
     tags: true
     branch: main
