@@ -3,7 +3,7 @@ from unittest import TestCase
 
 from aioresponses import aioresponses
 
-from octopus_energy import OctopusEnergyRestClient, MeterType
+from octopus_energy import OctopusEnergyRestClient
 from octopus_energy.rest_client import _API_BASE
 from tests import load_fixture_json
 
@@ -43,3 +43,18 @@ class E2eTests(TestCase):
 
         response = loop.run_until_complete(get())
         self.assertEqual(response, load_fixture_json("consumption_response.json"))
+
+    @aioresponses()
+    def test_get_account_details_v1(self, aiomock: aioresponses):
+        aiomock.get(
+            f"{_API_BASE}/v1/accounts/account_number",
+            payload=load_fixture_json("account_response.json"),
+        )
+        loop = asyncio.get_event_loop()
+
+        async def get():
+            async with OctopusEnergyRestClient(_FAKE_API_TOKEN) as client:
+                return await client.get_account_details("account_number")
+
+        response = loop.run_until_complete(get())
+        self.assertEqual(response, load_fixture_json("account_response.json"))

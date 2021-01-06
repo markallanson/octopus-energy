@@ -1,0 +1,81 @@
+{
+  "number": "A-68XX9999",
+  "properties": [
+    {
+      "address_line_1": "XXXXXXX",
+      "address_line_2": "XXXXXXX",
+      "address_line_3": "XXXXXXX",
+      "county": "XXXXXXX",
+      "electricity_meter_points": [
+        {
+          "agreements": [
+            {
+              "tariff_code": "E-1R-VAR-16-10-31-A",
+              "valid_from": "2017-01-02T00:00:00Z",
+              "valid_to": "2018-02-16T00:00:00Z"
+            },
+            {
+              "tariff_code": "E-1R-VAR-17-01-11-A",
+              "valid_from": "2018-02-16T00:00:00Z",
+              "valid_to": null
+            }
+          ],
+          "consumption_standard": 7015,
+          "is_export": false,
+          "meters": [
+            {
+              "registers": [
+                {
+                  "identifier": "01",
+                  "is_settlement_register": true,
+                  "rate": "STANDARD"
+                }
+              ],
+              "serial_number": "ESESESESES"
+            },
+            {
+              "registers": [
+                {
+                  "identifier": "R1",
+                  "is_settlement_register": true,
+                  "rate": "STANDARD"
+                }
+              ],
+              "serial_number": "ESESESESES"
+            }
+          ],
+          "mpan": "9999999999999",
+          "profile_class": 1
+        }
+      ],
+      "gas_meter_points": [
+        {
+          "agreements": [
+            {
+              "tariff_code": "G-1R-VAR-16-10-31-A",
+              "valid_from": "2017-01-02T00:00:00Z",
+              "valid_to": "2018-02-16T00:00:00Z"
+            },
+            {
+              "tariff_code": "G-1R-VAR-17-01-11-A",
+              "valid_from": "2018-02-16T00:00:00Z",
+              "valid_to": null
+            }
+          ],
+          "consumption_standard": 31140,
+          "meters": [
+            {
+              "serial_number": "GSGSGSGSGSGSGS"
+            }
+          ],
+          "mprn": "9999999999"
+        }
+      ],
+      "id": 23445,
+      "moved_in_at": "2014-09-05T20:37:46.732538Z",
+      "moved_out_at": null,
+      "postcode": "AA1 1AA",
+      "town": ""
+    }
+  ]
+}

@@ -12,12 +12,14 @@ _API_BASE = "https://api.octopus.energy"
 class OctopusEnergyRestClient:
     """A client for interacting with the Octopus Energy RESTful API.
 
-    This is a basic wrapper around the REST endpoints and all methods return dictionary representation of the response
-    json. IT handles authentication and everything else related to interacting with the API endpoints. It does not do
-    any interpretation of the data returned.
+    This is a basic wrapper around the REST endpoints and all methods return dictionary
+    representation of the response json. IT handles authentication and everything else
+    related to interacting with the API endpoints. It does not do any interpretation of
+    the data returned.
 
-    This client can operate either as a context manager, or as a regular object. If you use the latter ensure that
-    you call close at the end to release any underlying resources this client uses.
+    This client can operate either as an async context manager, or as a regular object.
+    If you use the latter ensure that you call close at the end to release any underlying
+    resources this client uses.
     """
 
     def __init__(self, api_token: str, base_url: str = _API_BASE):
@@ -42,6 +44,19 @@ class OctopusEnergyRestClient:
         Once the client is closed, you cannot use it to make any further calls.
         """
         await self.session.close()
+
+    async def get_account_details(self, account_number: str):
+        """Gets account details for an account number.
+
+        Note that your API key must have access to the account in order to get it's details.
+
+        Args:
+            account_number: The account number whose details are being requested
+
+        Returns:
+            A dictionary containing the account details
+        """
+        return await self._execute(["v1", "accounts", account_number])
 
     async def get_gas_consumption_v1(self, mprn: str, serial_number: str) -> dict:
         """Gets the consumption of gas from a specific meter.
