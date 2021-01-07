@@ -1,0 +1,55 @@
+{
+  "count": 101,
+  "next": "https://api.octopus.energy/v1/products/?page=2",
+  "previous": null,
+  "results": [
+    {
+      "available_from": "2020-12-31T00:00:00Z",
+      "available_to": null,
+      "brand": "AFFECT_ENERGY",
+      "code": "AFFECT-FIX-12M-20-12-31",
+      "description": "This tariff features 100% renewable electricity and fixes your unit rates and standing charge for 12 months. There are no exit fees, so if you change your mind, you're in control.",
+      "direction": "IMPORT",
+      "display_name": "Affect 12M Fixed",
+      "full_name": "Affect 12M Fixed December 2020 v1",
+      "is_business": false,
+      "is_green": false,
+      "is_prepay": false,
+      "is_restricted": false,
+      "is_tracker": false,
+      "is_variable": false,
+      "links": [
+        {
+          "href": "https://api.octopus.energy/v1/products/AFFECT-FIX-12M-20-12-31/",
+          "method": "GET",
+          "rel": "self"
+        }
+      ],
+      "term": 12
+    },
+    {
+      "available_from": "2020-11-11T17:00:00Z",
+      "available_to": null,
+      "brand": "AFFECT_ENERGY",
+      "code": "AFFECT-SEG-FIX-12M-20-11-11",
+      "description": "This is our Smart Export Guarantee compliant export tariff",
+      "direction": "EXPORT",
+      "display_name": "Affect Smart Export Guarantee",
+      "full_name": "Affect Smart Export Guarantee November 2020 v1",
+      "is_business": false,
+      "is_green": true,
+      "is_prepay": false,
+      "is_restricted": false,
+      "is_tracker": false,
+      "is_variable": false,
+      "links": [
+        {
+          "href": "https://api.octopus.energy/v1/products/AFFECT-SEG-FIX-12M-20-11-11/",
+          "method": "GET",
+          "rel": "self"
+        }
+      ],
+      "term": 12
+    }
+  ]
+}

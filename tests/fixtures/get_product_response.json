@@ -1,0 +1,538 @@
+{
+  "code": "AFFECT-SEG-FIX-12M-20-11-11",
+  "full_name": "Affect Smart Export Guarantee November 2020 v1",
+  "display_name": "Affect Smart Export Guarantee",
+  "description": "This is our Smart Export Guarantee compliant export tariff",
+  "is_variable": false,
+  "is_green": true,
+  "is_tracker": false,
+  "is_prepay": false,
+  "is_business": false,
+  "is_restricted": false,
+  "term": 12,
+  "available_from": "2020-11-11T17:00:00Z",
+  "available_to": null,
+  "tariffs_active_at": "2021-01-07T19:51:50.907790Z",
+  "single_register_electricity_tariffs": {
+    "_A": {
+      "direct_debit_monthly": {
+        "code": "E-1R-AFFECT-SEG-FIX-12M-20-11-11-A",
+        "standing_charge_exc_vat": 0.0,
+        "standing_charge_inc_vat": 0.0,
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 0,
+        "exit_fees_inc_vat": 0,
+        "links": [
+          {
+            "href": "https://api.octopus.energy/v1/products/AFFECT-SEG-FIX-12M-20-11-11/electricity-tariffs/E-1R-AFFECT-SEG-FIX-12M-20-11-11-A/standing-charges/",
+            "method": "GET",
+            "rel": "standing_charges"
+          },
+          {
+            "href": "https://api.octopus.energy/v1/products/AFFECT-SEG-FIX-12M-20-11-11/electricity-tariffs/E-1R-AFFECT-SEG-FIX-12M-20-11-11-A/standard-unit-rates/",
+            "method": "GET",
+            "rel": "standard_unit_rates"
+          }
+        ],
+        "standard_unit_rate_exc_vat": 3.0,
+        "standard_unit_rate_inc_vat": 3.0
+      }
+    },
+    "_B": {
+      "direct_debit_monthly": {
+        "code": "E-1R-AFFECT-SEG-FIX-12M-20-11-11-B",
+        "standing_charge_exc_vat": 0.0,
+        "standing_charge_inc_vat": 0.0,
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 0,
+        "exit_fees_inc_vat": 0,
+        "links": [
+          {
+            "href": "https://api.octopus.energy/v1/products/AFFECT-SEG-FIX-12M-20-11-11/electricity-tariffs/E-1R-AFFECT-SEG-FIX-12M-20-11-11-B/standing-charges/",
+            "method": "GET",
+            "rel": "standing_charges"
+          },
+          {
+            "href": "https://api.octopus.energy/v1/products/AFFECT-SEG-FIX-12M-20-11-11/electricity-tariffs/E-1R-AFFECT-SEG-FIX-12M-20-11-11-B/standard-unit-rates/",
+            "method": "GET",
+            "rel": "standard_unit_rates"
+          }
+        ],
+        "standard_unit_rate_exc_vat": 3.0,
+        "standard_unit_rate_inc_vat": 3.0
+      }
+    },
+    "_C": {
+      "direct_debit_monthly": {
+        "code": "E-1R-AFFECT-SEG-FIX-12M-20-11-11-C",
+        "standing_charge_exc_vat": 0.0,
+        "standing_charge_inc_vat": 0.0,
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 0,
+        "exit_fees_inc_vat": 0,
+        "links": [
+          {
+            "href": "https://api.octopus.energy/v1/products/AFFECT-SEG-FIX-12M-20-11-11/electricity-tariffs/E-1R-AFFECT-SEG-FIX-12M-20-11-11-C/standing-charges/",
+            "method": "GET",
+            "rel": "standing_charges"
+          },
+          {
+            "href": "https://api.octopus.energy/v1/products/AFFECT-SEG-FIX-12M-20-11-11/electricity-tariffs/E-1R-AFFECT-SEG-FIX-12M-20-11-11-C/standard-unit-rates/",
+            "method": "GET",
+            "rel": "standard_unit_rates"
+          }
+        ],
+        "standard_unit_rate_exc_vat": 3.0,
+        "standard_unit_rate_inc_vat": 3.0
+      }
+    },
+    "_D": {
+      "direct_debit_monthly": {
+        "code": "E-1R-AFFECT-SEG-FIX-12M-20-11-11-D",
+        "standing_charge_exc_vat": 0.0,
+        "standing_charge_inc_vat": 0.0,
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 0,
+        "exit_fees_inc_vat": 0,
+        "links": [
+          {
+            "href": "https://api.octopus.energy/v1/products/AFFECT-SEG-FIX-12M-20-11-11/electricity-tariffs/E-1R-AFFECT-SEG-FIX-12M-20-11-11-D/standing-charges/",
+            "method": "GET",
+            "rel": "standing_charges"
+          },
+          {
+            "href": "https://api.octopus.energy/v1/products/AFFECT-SEG-FIX-12M-20-11-11/electricity-tariffs/E-1R-AFFECT-SEG-FIX-12M-20-11-11-D/standard-unit-rates/",
+            "method": "GET",
+            "rel": "standard_unit_rates"
+          }
+        ],
+        "standard_unit_rate_exc_vat": 3.0,
+        "standard_unit_rate_inc_vat": 3.0
+      }
+    },
+    "_E": {
+      "direct_debit_monthly": {
+        "code": "E-1R-AFFECT-SEG-FIX-12M-20-11-11-E",
+        "standing_charge_exc_vat": 0.0,
+        "standing_charge_inc_vat": 0.0,
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 0,
+        "exit_fees_inc_vat": 0,
+        "links": [
+          {
+            "href": "https://api.octopus.energy/v1/products/AFFECT-SEG-FIX-12M-20-11-11/electricity-tariffs/E-1R-AFFECT-SEG-FIX-12M-20-11-11-E/standing-charges/",
+            "method": "GET",
+            "rel": "standing_charges"
+          },
+          {
+            "href": "https://api.octopus.energy/v1/products/AFFECT-SEG-FIX-12M-20-11-11/electricity-tariffs/E-1R-AFFECT-SEG-FIX-12M-20-11-11-E/standard-unit-rates/",
+            "method": "GET",
+            "rel": "standard_unit_rates"
+          }
+        ],
+        "standard_unit_rate_exc_vat": 3.0,
+        "standard_unit_rate_inc_vat": 3.0
+      }
+    },
+    "_F": {
+      "direct_debit_monthly": {
+        "code": "E-1R-AFFECT-SEG-FIX-12M-20-11-11-F",
+        "standing_charge_exc_vat": 0.0,
+        "standing_charge_inc_vat": 0.0,
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 0,
+        "exit_fees_inc_vat": 0,
+        "links": [
+          {
+            "href": "https://api.octopus.energy/v1/products/AFFECT-SEG-FIX-12M-20-11-11/electricity-tariffs/E-1R-AFFECT-SEG-FIX-12M-20-11-11-F/standing-charges/",
+            "method": "GET",
+            "rel": "standing_charges"
+          },
+          {
+            "href": "https://api.octopus.energy/v1/products/AFFECT-SEG-FIX-12M-20-11-11/electricity-tariffs/E-1R-AFFECT-SEG-FIX-12M-20-11-11-F/standard-unit-rates/",
+            "method": "GET",
+            "rel": "standard_unit_rates"
+          }
+        ],
+        "standard_unit_rate_exc_vat": 3.0,
+        "standard_unit_rate_inc_vat": 3.0
+      }
+    },
+    "_G": {
+      "direct_debit_monthly": {
+        "code": "E-1R-AFFECT-SEG-FIX-12M-20-11-11-G",
+        "standing_charge_exc_vat": 0.0,
+        "standing_charge_inc_vat": 0.0,
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 0,
+        "exit_fees_inc_vat": 0,
+        "links": [
+          {
+            "href": "https://api.octopus.energy/v1/products/AFFECT-SEG-FIX-12M-20-11-11/electricity-tariffs/E-1R-AFFECT-SEG-FIX-12M-20-11-11-G/standing-charges/",
+            "method": "GET",
+            "rel": "standing_charges"
+          },
+          {
+            "href": "https://api.octopus.energy/v1/products/AFFECT-SEG-FIX-12M-20-11-11/electricity-tariffs/E-1R-AFFECT-SEG-FIX-12M-20-11-11-G/standard-unit-rates/",
+            "method": "GET",
+            "rel": "standard_unit_rates"
+          }
+        ],
+        "standard_unit_rate_exc_vat": 3.0,
+        "standard_unit_rate_inc_vat": 3.0
+      }
+    },
+    "_H": {
+      "direct_debit_monthly": {
+        "code": "E-1R-AFFECT-SEG-FIX-12M-20-11-11-H",
+        "standing_charge_exc_vat": 0.0,
+        "standing_charge_inc_vat": 0.0,
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 0,
+        "exit_fees_inc_vat": 0,
+        "links": [
+          {
+            "href": "https://api.octopus.energy/v1/products/AFFECT-SEG-FIX-12M-20-11-11/electricity-tariffs/E-1R-AFFECT-SEG-FIX-12M-20-11-11-H/standing-charges/",
+            "method": "GET",
+            "rel": "standing_charges"
+          },
+          {
+            "href": "https://api.octopus.energy/v1/products/AFFECT-SEG-FIX-12M-20-11-11/electricity-tariffs/E-1R-AFFECT-SEG-FIX-12M-20-11-11-H/standard-unit-rates/",
+            "method": "GET",
+            "rel": "standard_unit_rates"
+          }
+        ],
+        "standard_unit_rate_exc_vat": 3.0,
+        "standard_unit_rate_inc_vat": 3.0
+      }
+    },
+    "_J": {
+      "direct_debit_monthly": {
+        "code": "E-1R-AFFECT-SEG-FIX-12M-20-11-11-J",
+        "standing_charge_exc_vat": 0.0,
+        "standing_charge_inc_vat": 0.0,
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 0,
+        "exit_fees_inc_vat": 0,
+        "links": [
+          {
+            "href": "https://api.octopus.energy/v1/products/AFFECT-SEG-FIX-12M-20-11-11/electricity-tariffs/E-1R-AFFECT-SEG-FIX-12M-20-11-11-J/standing-charges/",
+            "method": "GET",
+            "rel": "standing_charges"
+          },
+          {
+            "href": "https://api.octopus.energy/v1/products/AFFECT-SEG-FIX-12M-20-11-11/electricity-tariffs/E-1R-AFFECT-SEG-FIX-12M-20-11-11-J/standard-unit-rates/",
+            "method": "GET",
+            "rel": "standard_unit_rates"
+          }
+        ],
+        "standard_unit_rate_exc_vat": 3.0,
+        "standard_unit_rate_inc_vat": 3.0
+      }
+    },
+    "_K": {
+      "direct_debit_monthly": {
+        "code": "E-1R-AFFECT-SEG-FIX-12M-20-11-11-K",
+        "standing_charge_exc_vat": 0.0,
+        "standing_charge_inc_vat": 0.0,
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 0,
+        "exit_fees_inc_vat": 0,
+        "links": [
+          {
+            "href": "https://api.octopus.energy/v1/products/AFFECT-SEG-FIX-12M-20-11-11/electricity-tariffs/E-1R-AFFECT-SEG-FIX-12M-20-11-11-K/standing-charges/",
+            "method": "GET",
+            "rel": "standing_charges"
+          },
+          {
+            "href": "https://api.octopus.energy/v1/products/AFFECT-SEG-FIX-12M-20-11-11/electricity-tariffs/E-1R-AFFECT-SEG-FIX-12M-20-11-11-K/standard-unit-rates/",
+            "method": "GET",
+            "rel": "standard_unit_rates"
+          }
+        ],
+        "standard_unit_rate_exc_vat": 3.0,
+        "standard_unit_rate_inc_vat": 3.0
+      }
+    },
+    "_L": {
+      "direct_debit_monthly": {
+        "code": "E-1R-AFFECT-SEG-FIX-12M-20-11-11-L",
+        "standing_charge_exc_vat": 0.0,
+        "standing_charge_inc_vat": 0.0,
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 0,
+        "exit_fees_inc_vat": 0,
+        "links": [
+          {
+            "href": "https://api.octopus.energy/v1/products/AFFECT-SEG-FIX-12M-20-11-11/electricity-tariffs/E-1R-AFFECT-SEG-FIX-12M-20-11-11-L/standing-charges/",
+            "method": "GET",
+            "rel": "standing_charges"
+          },
+          {
+            "href": "https://api.octopus.energy/v1/products/AFFECT-SEG-FIX-12M-20-11-11/electricity-tariffs/E-1R-AFFECT-SEG-FIX-12M-20-11-11-L/standard-unit-rates/",
+            "method": "GET",
+            "rel": "standard_unit_rates"
+          }
+        ],
+        "standard_unit_rate_exc_vat": 3.0,
+        "standard_unit_rate_inc_vat": 3.0
+      }
+    },
+    "_M": {
+      "direct_debit_monthly": {
+        "code": "E-1R-AFFECT-SEG-FIX-12M-20-11-11-M",
+        "standing_charge_exc_vat": 0.0,
+        "standing_charge_inc_vat": 0.0,
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 0,
+        "exit_fees_inc_vat": 0,
+        "links": [
+          {
+            "href": "https://api.octopus.energy/v1/products/AFFECT-SEG-FIX-12M-20-11-11/electricity-tariffs/E-1R-AFFECT-SEG-FIX-12M-20-11-11-M/standing-charges/",
+            "method": "GET",
+            "rel": "standing_charges"
+          },
+          {
+            "href": "https://api.octopus.energy/v1/products/AFFECT-SEG-FIX-12M-20-11-11/electricity-tariffs/E-1R-AFFECT-SEG-FIX-12M-20-11-11-M/standard-unit-rates/",
+            "method": "GET",
+            "rel": "standard_unit_rates"
+          }
+        ],
+        "standard_unit_rate_exc_vat": 3.0,
+        "standard_unit_rate_inc_vat": 3.0
+      }
+    },
+    "_N": {
+      "direct_debit_monthly": {
+        "code": "E-1R-AFFECT-SEG-FIX-12M-20-11-11-N",
+        "standing_charge_exc_vat": 0.0,
+        "standing_charge_inc_vat": 0.0,
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 0,
+        "exit_fees_inc_vat": 0,
+        "links": [
+          {
+            "href": "https://api.octopus.energy/v1/products/AFFECT-SEG-FIX-12M-20-11-11/electricity-tariffs/E-1R-AFFECT-SEG-FIX-12M-20-11-11-N/standing-charges/",
+            "method": "GET",
+            "rel": "standing_charges"
+          },
+          {
+            "href": "https://api.octopus.energy/v1/products/AFFECT-SEG-FIX-12M-20-11-11/electricity-tariffs/E-1R-AFFECT-SEG-FIX-12M-20-11-11-N/standard-unit-rates/",
+            "method": "GET",
+            "rel": "standard_unit_rates"
+          }
+        ],
+        "standard_unit_rate_exc_vat": 3.0,
+        "standard_unit_rate_inc_vat": 3.0
+      }
+    },
+    "_P": {
+      "direct_debit_monthly": {
+        "code": "E-1R-AFFECT-SEG-FIX-12M-20-11-11-P",
+        "standing_charge_exc_vat": 0.0,
+        "standing_charge_inc_vat": 0.0,
+        "online_discount_exc_vat": 0,
+        "online_discount_inc_vat": 0,
+        "dual_fuel_discount_exc_vat": 0,
+        "dual_fuel_discount_inc_vat": 0,
+        "exit_fees_exc_vat": 0,
+        "exit_fees_inc_vat": 0,
+        "links": [
+          {
+            "href": "https://api.octopus.energy/v1/products/AFFECT-SEG-FIX-12M-20-11-11/electricity-tariffs/E-1R-AFFECT-SEG-FIX-12M-20-11-11-P/standing-charges/",
+            "method": "GET",
+            "rel": "standing_charges"
+          },
+          {
+            "href": "https://api.octopus.energy/v1/products/AFFECT-SEG-FIX-12M-20-11-11/electricity-tariffs/E-1R-AFFECT-SEG-FIX-12M-20-11-11-P/standard-unit-rates/",
+            "method": "GET",
+            "rel": "standard_unit_rates"
+          }
+        ],
+        "standard_unit_rate_exc_vat": 3.0,
+        "standard_unit_rate_inc_vat": 3.0
+      }
+    }
+  },
+  "dual_register_electricity_tariffs": {},
+  "single_register_gas_tariffs": {},
+  "sample_quotes": {
+    "_A": {
+      "direct_debit_monthly": {
+        "electricity_single_rate": {
+          "annual_cost_inc_vat": 9135,
+          "annual_cost_exc_vat": 8700
+        }
+      }
+    },
+    "_B": {
+      "direct_debit_monthly": {
+        "electricity_single_rate": {
+          "annual_cost_inc_vat": 9135,
+          "annual_cost_exc_vat": 8700
+        }
+      }
+    },
+    "_C": {
+      "direct_debit_monthly": {
+        "electricity_single_rate": {
+          "annual_cost_inc_vat": 9135,
+          "annual_cost_exc_vat": 8700
+        }
+      }
+    },
+    "_D": {
+      "direct_debit_monthly": {
+        "electricity_single_rate": {
+          "annual_cost_inc_vat": 9135,
+          "annual_cost_exc_vat": 8700
+        }
+      }
+    },
+    "_E": {
+      "direct_debit_monthly": {
+        "electricity_single_rate": {
+          "annual_cost_inc_vat": 9135,
+          "annual_cost_exc_vat": 8700
+        }
+      }
+    },
+    "_F": {
+      "direct_debit_monthly": {
+        "electricity_single_rate": {
+          "annual_cost_inc_vat": 9135,
+          "annual_cost_exc_vat": 8700
+        }
+      }
+    },
+    "_G": {
+      "direct_debit_monthly": {
+        "electricity_single_rate": {
+          "annual_cost_inc_vat": 9135,
+          "annual_cost_exc_vat": 8700
+        }
+      }
+    },
+    "_H": {
+      "direct_debit_monthly": {
+        "electricity_single_rate": {
+          "annual_cost_inc_vat": 9135,
+          "annual_cost_exc_vat": 8700
+        }
+      }
+    },
+    "_J": {
+      "direct_debit_monthly": {
+        "electricity_single_rate": {
+          "annual_cost_inc_vat": 9135,
+          "annual_cost_exc_vat": 8700
+        }
+      }
+    },
+    "_K": {
+      "direct_debit_monthly": {
+        "electricity_single_rate": {
+          "annual_cost_inc_vat": 9135,
+          "annual_cost_exc_vat": 8700
+        }
+      }
+    },
+    "_L": {
+      "direct_debit_monthly": {
+        "electricity_single_rate": {
+          "annual_cost_inc_vat": 9135,
+          "annual_cost_exc_vat": 8700
+        }
+      }
+    },
+    "_M": {
+      "direct_debit_monthly": {
+        "electricity_single_rate": {
+          "annual_cost_inc_vat": 9135,
+          "annual_cost_exc_vat": 8700
+        }
+      }
+    },
+    "_N": {
+      "direct_debit_monthly": {
+        "electricity_single_rate": {
+          "annual_cost_inc_vat": 9135,
+          "annual_cost_exc_vat": 8700
+        }
+      }
+    },
+    "_P": {
+      "direct_debit_monthly": {
+        "electricity_single_rate": {
+          "annual_cost_inc_vat": 9135,
+          "annual_cost_exc_vat": 8700
+        }
+      }
+    }
+  },
+  "sample_consumption": {
+    "electricity_single_rate": {
+      "electricity_standard": 2900
+    },
+    "electricity_dual_rate": {
+      "electricity_day": 2436,
+      "electricity_night": 1764
+    },
+    "dual_fuel_single_rate": {
+      "electricity_standard": 2900,
+      "gas_standard": 12000
+    },
+    "dual_fuel_dual_rate": {
+      "electricity_day": 2436,
+      "electricity_night": 1764,
+      "gas_standard": 12000
+    }
+  },
+  "links": [
+    {
+      "href": "https://api.octopus.energy/v1/products/AFFECT-SEG-FIX-12M-20-11-11/",
+      "method": "GET",
+      "rel": "self"
+    }
+  ],
+  "brand": "AFFECT_ENERGY"
+}

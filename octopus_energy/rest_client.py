@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any
+from typing import Any, Optional
 
 from aiohttp import BasicAuth, ClientSession
 from furl import furl
@@ -22,9 +22,18 @@ class OctopusEnergyRestClient:
     resources this client uses.
     """
 
-    def __init__(self, api_token: str, base_url: str = _API_BASE):
+    def __init__(self, api_token: Optional[str] = None, base_url: str = _API_BASE):
+        """Create a new instance of the Octopus API rest client.
+
+        Args:
+            api_token: [Optional] The API token to use to access the APIs. If not specified only
+                       octopus public APIs can be called.
+            base_url: The Octopus Energy API address.
+        """
         self.base_url = furl(base_url)
-        self.session = ClientSession(auth=BasicAuth(api_token, ""))
+        self.session = ClientSession(
+            auth=BasicAuth(api_token, "") if api_token is not None else None
+        )
 
     def __enter__(self):
         raise TypeError("Use async context manager (await with) instead")
@@ -58,6 +67,21 @@ class OctopusEnergyRestClient:
         """
         return await self._execute(["v1", "accounts", account_number])
 
+    async def get_electricity_consumption_v1(self, mpan: str, serial_number: str) -> dict:
+        """Gets the consumption of electricity from a specific meter.
+
+        Args:
+            mpan: The MPAN (Meter Point Administration Number) of the meter to query.
+            serial_number: The serial number of the meter to query.
+
+        Returns:
+            A dictionary containing the electricity consumption response.
+
+        """
+        return await self._execute(
+            ["v1", "electricity-meter-points", mpan, "meters", serial_number, "consumption"]
+        )
+
     async def get_gas_consumption_v1(self, mprn: str, serial_number: str) -> dict:
         """Gets the consumption of gas from a specific meter.
 
@@ -73,20 +97,26 @@ class OctopusEnergyRestClient:
             ["v1", "gas-meter-points", mprn, "meters", serial_number, "consumption"]
         )
 
-    async def get_electricity_consumption_v1(self, mpan: str, serial_number: str) -> dict:
-        """Gets the consumption of electricity from a specific meter.
-
-        Args:
-            mpan: The MPAN (Meter Point Administration Number) of the meter to query.
-            serial_number: The serial number of the meter to query.
+    async def get_products_v1(self) -> dict:
+        """Gets octopus energy products.
 
         Returns:
-            A dictionary containing the electricity consumption response.
+            A dictionary containing the products response.
 
         """
-        return await self._execute(
-            ["v1", "electricity-meter-points", mpan, "meters", serial_number, "consumption"]
-        )
+        return await self._execute(["v1", "products"])
+
+    async def get_product_v1(self, product_code: str) -> dict:
+        """Gets detailed information about a specific octopus energy product.
+
+        Args:
+            product_code: The product code to retrieve.
+
+        Returns:
+            A dictionary containing the product details response.
+
+        """
+        return await self._execute(["v1", "products", product_code])
 
     async def _execute(self, url_parts: list, **kwargs) -> Any:
         """Executes an API call to Octopus energy and maps the response."""
