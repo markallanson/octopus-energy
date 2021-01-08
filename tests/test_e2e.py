@@ -38,6 +38,19 @@ class E2eTests(TestCase):
         )
 
     @aioresponses()
+    def test_get_electricity_meter_points_v1(self, aiomock: aioresponses):
+        async def get():
+            async with OctopusEnergyRestClient(_FAKE_API_TOKEN) as client:
+                return await client.get_electricity_meter_points_v1("mpan")
+
+        self._run_test(
+            "v1/electricity-meter-points/mpan",
+            "get_electricity_meter_points.json",
+            get,
+            aiomock,
+        )
+
+    @aioresponses()
     def test_get_gas_consumption_v1(self, aiomock: aioresponses):
         async def get():
             async with OctopusEnergyRestClient(_FAKE_API_TOKEN) as client:

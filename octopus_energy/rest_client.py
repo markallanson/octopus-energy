@@ -83,6 +83,18 @@ class OctopusEnergyRestClient:
             ["v1", "electricity-meter-points", mpan, "meters", serial_number, "consumption"]
         )
 
+    async def get_electricity_meter_points_v1(self, mpan: str) -> dict:
+        """Gets the Grid Supply Point (GSP) of electricity at a location.
+
+        Args:
+            mpan: The MPAN (Meter Point Administration Number) of the location to query.
+
+        Returns:
+            A dictionary containing the meters at the location.
+
+        """
+        return await self._execute(["v1", "electricity-meter-points", mpan])
+
     async def get_gas_consumption_v1(self, mprn: str, serial_number: str) -> dict:
         """Gets the consumption of gas from a specific meter.
 
