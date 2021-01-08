@@ -1,0 +1,37 @@
+{
+  "count": 5,
+  "next": null,
+  "previous": null,
+  "results": [
+    {
+      "valid_from": "2020-11-01T00:00:00Z",
+      "valid_to": null,
+      "value_exc_vat": 20.64,
+      "value_inc_vat": 21.672
+    },
+    {
+      "valid_from": "2019-04-30T23:00:00Z",
+      "valid_to": "2020-11-01T00:00:00Z",
+      "value_exc_vat": 18.46,
+      "value_inc_vat": 19.383
+    },
+    {
+      "valid_from": "2018-11-20T00:00:00Z",
+      "valid_to": "2019-04-30T23:00:00Z",
+      "value_exc_vat": 18.46,
+      "value_inc_vat": 19.383
+    },
+    {
+      "valid_from": "2018-08-05T23:00:00Z",
+      "valid_to": "2018-11-20T00:00:00Z",
+      "value_exc_vat": 18.46,
+      "value_inc_vat": 19.383
+    },
+    {
+      "valid_from": "2017-01-11T10:00:00Z",
+      "valid_to": "2018-08-05T23:00:00Z",
+      "value_exc_vat": 18.0,
+      "value_inc_vat": 18.9
+    }
+  ]
+}
