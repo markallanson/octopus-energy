@@ -5,6 +5,7 @@ from aiohttp import BasicAuth, ClientSession
 from furl import furl
 
 from octopus_energy.exceptions import ApiError, ApiAuthenticationError, ApiNotFoundError
+from octopus_energy.models import RateType, EnergyTariffType
 
 _API_BASE = "https://api.octopus.energy"
 
@@ -71,7 +72,7 @@ class OctopusEnergyRestClient:
         """Gets the consumption of electricity from a specific meter.
 
         Args:
-            mpan: The MPAN (Meter Point Administration Number) of the meter to query.
+            mpan: The MPAN (Meter Point Administration Number) of the location to query.
             serial_number: The serial number of the meter to query.
 
         Returns:
@@ -86,7 +87,7 @@ class OctopusEnergyRestClient:
         """Gets the consumption of gas from a specific meter.
 
         Args:
-            mprn: The MPRN (Meter Point Reference Number) of the meter to query.
+            mprn: The MPRN (Meter Point Reference Number) of the location to query.
             serial_number: The serial number of the meter to query.
 
         Returns:
@@ -117,6 +118,29 @@ class OctopusEnergyRestClient:
 
         """
         return await self._execute(["v1", "products", product_code])
+
+    async def get_tariff_v1(
+        self,
+        product_code: str,
+        tariff_type: EnergyTariffType,
+        tariff_code: str,
+        rate_type: RateType,
+    ) -> dict:
+        """Gets tariff information about a specific octopus energy tariff.
+
+        Args:
+            product_code: The product code the tariff belongs to.
+            tariff_type: The type of tariff to get the details of.
+            tariff_code: The tariff code to get the details of.
+            rate_type: The rate within the tariff to retrieve.
+
+        Returns:
+            A dictionary containing the tariff details response.
+
+        """
+        return await self._execute(
+            ["v1", "products", product_code, tariff_type.value, tariff_code, rate_type.value]
+        )
 
     async def _execute(self, url_parts: list, **kwargs) -> Any:
         """Executes an API call to Octopus energy and maps the response."""

@@ -66,3 +66,45 @@ class Consumption:
     unit_type: UnitType
     meter_type: MeterType
     intervals: List[IntervalConsumption] = field(default_factory=lambda: [])
+
+
+class _DocEnum(Enum):
+    """Wrapper to create enumerations with useful docstrings."""
+
+    def __new__(cls, value, doc):
+        self = object.__new__(cls)
+        self._value_ = value
+        if doc is not None:
+            self.__doc__ = doc
+        return self
+
+
+class EnergyTariffType(_DocEnum):
+    """Represents a type of energy tariff."""
+
+    ELECTRICITY = (
+        "electricity-tariffs",
+        "Represents a type of tariff related to electricity consumption.",
+    )
+    GAS = "gas-tariffs", "Represents a type of tariff relate to gas consumption."
+
+
+class RateType(_DocEnum):
+    """Represents a type of rate that can be charged for a product."""
+
+    STANDING_CHARGES = (
+        "standing-charges",
+        "Represents the standing charge applied daily to an energy tariff.",
+    )
+    STANDARD_UNIT_RATES = (
+        "standard-unit-rates",
+        "Represents the standard unit rates for flat rate energy tariffs.",
+    )
+    DAY_UNIT_RATES = (
+        "day-unit-rates",
+        "Represents the rate charged during the day for dual rate tariffs.",
+    )
+    NIGHT_UNIT_RATES = (
+        "night-unit-rates",
+        "Represents the rate charged during the night for dual rate tariffs.",
+    )

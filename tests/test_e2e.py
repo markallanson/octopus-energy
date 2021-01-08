@@ -5,6 +5,7 @@ from unittest import TestCase
 from aioresponses import aioresponses
 
 from octopus_energy import OctopusEnergyRestClient
+from octopus_energy.models import EnergyTariffType, RateType
 from octopus_energy.rest_client import _API_BASE
 from tests import load_fixture_json
 
@@ -64,6 +65,21 @@ class E2eTests(TestCase):
                 return await client.get_product_v1("product_id")
 
         self._run_test("v1/products/product_id", "get_product_response.json", get, aiomock)
+
+    @aioresponses()
+    def test_get_tariff_v1(self, aiomock: aioresponses):
+        async def get():
+            async with OctopusEnergyRestClient(_FAKE_API_TOKEN) as client:
+                return await client.get_tariff_v1(
+                    "product_id", EnergyTariffType.GAS, "tariff_code", RateType.STANDING_CHARGES
+                )
+
+        self._run_test(
+            "v1/products/product_id/gas-tariffs/tariff_code/standing-charges",
+            "get_tariff_response.json",
+            get,
+            aiomock,
+        )
 
     def _run_test(self, path: str, response_resource: str, func: Callable, aiomock: aioresponses):
         aiomock.get(
