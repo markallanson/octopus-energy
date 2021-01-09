@@ -1,5 +1,6 @@
 import json
 import os
+from asyncio import get_event_loop
 
 
 def load_fixture(filename: str) -> str:
@@ -26,3 +27,12 @@ def load_fixture_json(filename: str) -> dict:
         The content of the file parsed as json.
     """
     return json.loads(load_fixture(filename))
+
+
+def does_asyncio(func):
+    """Simple decorator for running a test inside an asyncio event loop."""
+
+    def wrapper(*args, **kwargs):
+        get_event_loop().run_until_complete(func(*args, **kwargs))
+
+    return wrapper
