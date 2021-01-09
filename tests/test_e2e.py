@@ -28,6 +28,20 @@ async def test_get_account_details_v1(mock_aioresponses: aioresponses):
 
 
 @pytest.mark.asyncio
+async def test_create_quote_v1(mock_aioresponses: aioresponses):
+    async def post(client):
+        return await client.create_quote(load_fixture_json("create_quote_request.json"))
+
+    await _run_post_test(
+        "v1/quotes",
+        "create_quote_request.json",
+        "create_quote_response.json",
+        post,
+        mock_aioresponses,
+    )
+
+
+@pytest.mark.asyncio
 async def test_get_elec_consumption_v1(mock_aioresponses: aioresponses):
     async def get(client):
         return await client.get_electricity_consumption_v1("mpan", "serial_number")

@@ -1,0 +1,59 @@
+{
+  "code": "50b348fcf01c4a57a5cba10c6c424b4e",
+  "gsp": "_H",
+  "products": [
+    {
+      "id": 4122828,
+      "code": "VAR-17-01-11",
+      "full_name": "Flexible Octopus January 2017 v1",
+      "display_name": "Flexible Octopus",
+      "description": "This great value 12 month fixed tariff guarantees…",
+      "monthly_amount": 7930,
+      "annual_amount": 95159,
+      "electricity_til": {
+        "supplier": "Octopus Energy",
+        "tariff_name": "Flexible Octopus February 2017 v1",
+        "tariff_type": "Standard variable product",
+        "tariff_code": "E-1R-VAR-17-01-11-H",
+        "payment_method": "Monthly direct debit",
+        "tariff_ends_on": "",
+        "price_guaranteed_until": "",
+        "exit_fees": 0,
+        "additionals": "",
+        "tcr": 15.85,
+        "standing_charge": 18.9,
+        "assumed_annual_consumption_day": null,
+        "assumed_annual_consumption_night": null,
+        "assumed_annual_consumption_off_peak": null,
+        "assumed_annual_consumption": 3100,
+        "unit_rate_day": null,
+        "unit_rate_night": null,
+        "unit_rate": 13.629,
+        "estimated_annual_cost": 49148,
+        "annual_standing_charge": 6898.5
+      },
+      "gas_til": {
+        "supplier": "Octopus Energy",
+        "tariff_name": "Flexible Octopus February 2017 v1",
+        "tariff_type": "Standard variable product",
+        "tariff_code": "G-1R-VAR-17-01-11-H",
+        "payment_method": "Monthly direct debit",
+        "tariff_ends_on": "",
+        "price_guaranteed_until": "",
+        "exit_fees": 0,
+        "additionals": "",
+        "tcr": 3.68,
+        "standing_charge": 18.9,
+        "assumed_annual_consumption_day": null,
+        "assumed_annual_consumption_night": null,
+        "assumed_annual_consumption_off_peak": null,
+        "assumed_annual_consumption": 12500,
+        "unit_rate_day": null,
+        "unit_rate_night": null,
+        "unit_rate": 3.129,
+        "estimated_annual_cost": 46011,
+        "annual_standing_charge": 6898.5
+      }
+    }
+  ]
+}
