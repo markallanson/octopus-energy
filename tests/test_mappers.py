@@ -1,6 +1,7 @@
 from datetime import datetime
 from unittest import TestCase
 
+import pytest
 from dateutil.tz import tzoffset
 
 from octopus_energy.mappers import (
@@ -137,18 +138,15 @@ class TestMappers(TestCase):
             self.assertEqual(consumption.unit_type, UnitType.KWH)
 
 
-class TestUnitConversion(TestCase):
-    def test_conversions(self):
-        """Tests the unit conversions supported by the library."""
-        conversion_tests = [
-            (UnitType.CUBIC_METERS, UnitType.KWH, 100, 1118.68),
-            (UnitType.KWH, UnitType.CUBIC_METERS, 100, 8.9391068044481),
-            (UnitType.KWH, UnitType.KWH, 100, 100),
-            (UnitType.CUBIC_METERS, UnitType.CUBIC_METERS, 100, 100),
-        ]
-        for conversion_test in conversion_tests:
-            with self.subTest(f"{conversion_test[0]} to {conversion_test[1]}"):
-                self.assertEqual(
-                    _calculate_unit(conversion_test[2], conversion_test[0], conversion_test[1]),
-                    conversion_test[3],
-                )
+@pytest.mark.parametrize(
+    "source_unit_type,desired_unit_type,source_unit,desired_unit",
+    [
+        (UnitType.CUBIC_METERS, UnitType.KWH, 100, 1118.68),
+        (UnitType.KWH, UnitType.CUBIC_METERS, 100, 8.9391068044481),
+        (UnitType.KWH, UnitType.KWH, 100, 100),
+        (UnitType.CUBIC_METERS, UnitType.CUBIC_METERS, 100, 100),
+    ],
+)
+def test_conversions(source_unit_type, desired_unit_type, source_unit, desired_unit):
+    """Tests the unit conversions supported by the library."""
+    assert _calculate_unit(source_unit, source_unit_type, desired_unit_type) == desired_unit
