@@ -10,6 +10,7 @@ from octopus_energy import (
     ApiAuthenticationError,
     ApiError,
     ApiNotFoundError,
+    ApiBadRequestError,
 )
 
 _MOCK_TOKEN = "sk_live_xxxxxx"
@@ -66,6 +67,19 @@ class ClientTest(TestCase):
         with self.subTest("gas consumption v1"):
             with self.assertRaises(ApiNotFoundError):
                 aiomock.get(re.compile(".*"), status=HTTPStatus.NOT_FOUND.value)
+                await self.get_gas_consumption_v1()
+
+    @pytest.mark.asyncio
+    @aioresponses()
+    async def test_raises_bad_request_api_error_when_not_ok(self, aiomock: aioresponses):
+        with self.subTest("elec consumption v1"):
+            with self.assertRaises(ApiBadRequestError):
+                aiomock.get(re.compile(".*"), status=HTTPStatus.BAD_REQUEST.value)
+                await self.get_electricity_consumption_v1()
+
+        with self.subTest("gas consumption v1"):
+            with self.assertRaises(ApiBadRequestError):
+                aiomock.get(re.compile(".*"), status=HTTPStatus.BAD_REQUEST.value)
                 await self.get_gas_consumption_v1()
 
     @pytest.mark.asyncio

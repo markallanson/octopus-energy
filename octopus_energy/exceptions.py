@@ -15,6 +15,12 @@ class ApiAuthenticationError(Exception):
     pass
 
 
+class ApiBadRequestError(Exception):
+    """Data posted to an API is incorrect. Typically the response code was 400."""
+
+    pass
+
+
 class ApiNotFoundError(Exception):
     """The resource requested as part of an API call does not exist."""
 
