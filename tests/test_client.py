@@ -2,7 +2,6 @@ import re
 from http import HTTPStatus
 from unittest import TestCase
 
-import pytest
 from aioresponses import aioresponses
 
 from octopus_energy import (
@@ -12,6 +11,7 @@ from octopus_energy import (
     ApiNotFoundError,
     ApiBadRequestError,
 )
+from tests import does_asyncio
 
 _MOCK_TOKEN = "sk_live_xxxxxx"
 
@@ -30,7 +30,7 @@ class ClientTest(TestCase):
         async with OctopusEnergyRestClient(_MOCK_TOKEN) as client:
             return await client.get_gas_consumption_v1("mprn", "serial_number")
 
-    @pytest.mark.asyncio
+    @does_asyncio
     @aioresponses()
     async def test_raises_api_auth_error_when_authentication_fails(self, mock_aioresponses):
         with self.subTest("elec consumption v1"):
@@ -43,7 +43,7 @@ class ClientTest(TestCase):
                 mock_aioresponses.get(re.compile(".*"), status=HTTPStatus.UNAUTHORIZED.value)
                 await self.get_gas_consumption_v1()
 
-    @pytest.mark.asyncio
+    @does_asyncio
     @aioresponses()
     async def test_raises_api_error_when_not_ok(self, aiomock: aioresponses):
         with self.subTest("elec consumption v1"):
@@ -56,7 +56,7 @@ class ClientTest(TestCase):
                 aiomock.get(re.compile(".*"), status=HTTPStatus.INTERNAL_SERVER_ERROR.value)
                 await self.get_gas_consumption_v1()
 
-    @pytest.mark.asyncio
+    @does_asyncio
     @aioresponses()
     async def test_raises_not_found_api_error_when_not_ok(self, aiomock: aioresponses):
         with self.subTest("elec consumption v1"):
@@ -69,7 +69,7 @@ class ClientTest(TestCase):
                 aiomock.get(re.compile(".*"), status=HTTPStatus.NOT_FOUND.value)
                 await self.get_gas_consumption_v1()
 
-    @pytest.mark.asyncio
+    @does_asyncio
     @aioresponses()
     async def test_raises_bad_request_api_error_when_not_ok(self, aiomock: aioresponses):
         with self.subTest("elec consumption v1"):
@@ -82,11 +82,11 @@ class ClientTest(TestCase):
                 aiomock.get(re.compile(".*"), status=HTTPStatus.BAD_REQUEST.value)
                 await self.get_gas_consumption_v1()
 
-    @pytest.mark.asyncio
+    @does_asyncio
     @aioresponses()
     async def test_get_elec_consumption_v1(self, aiomock: aioresponses):
         aiomock.get(re.compile(".*"), status=HTTPStatus.OK.value, payload={"results": []})
-        resp = self.get_electricity_consumption_v1()
+        resp = await self.get_electricity_consumption_v1()
         with self.subTest("call made"):
             self.assertEqual(len(aiomock.requests), 1)
         with self.subTest("response returned"):
@@ -94,11 +94,11 @@ class ClientTest(TestCase):
         with self.subTest("response is dictionary"):
             self.assertIsNotNone(type(resp), dict)
 
-    @pytest.mark.asyncio
+    @does_asyncio
     @aioresponses()
     async def test_get_gas_consumption_v1(self, aiomock: aioresponses):
         aiomock.get(re.compile(".*"), status=HTTPStatus.OK.value, payload={"results": []})
-        resp = self.get_gas_consumption_v1()
+        resp = await self.get_gas_consumption_v1()
         with self.subTest("call made"):
             self.assertEqual(len(aiomock.requests), 1)
         with self.subTest("response returned"):
