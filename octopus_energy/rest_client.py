@@ -61,8 +61,24 @@ class OctopusEnergyRestClient:
         """
         await self.session.close()
 
+    async def create_account(self, account_data: dict) -> dict:
+        """Creates an account.
+
+        Note that your API key must be a partner organisation API key in order for this API to
+        correctly function.
+
+        Args:
+            account_data: The information required to create an account. The format is documented
+                          in the octopus energy API documentation located at
+                          https://developer.octopus.energy/docs/api/#create-an-account
+
+        Returns:
+            A dictionary containing the account creation response.
+        """
+        return await self._post(["v1", "accounts"], account_data)
+
     async def create_quote(self, quote_data: dict) -> dict:
-        """Creates an energy quote
+        """Creates an energy quote.
 
         Note that your API key must be a partner organisation API key in order for this API to
         correctly function.
@@ -175,6 +191,23 @@ class OctopusEnergyRestClient:
         return await self._get(
             ["v1", "products", product_code, tariff_type.value, tariff_code, rate_type.value]
         )
+
+    async def renew_business_tariff(self, account_number: str, renewal_data: dict) -> dict:
+        """Creates an account.
+
+        Note that your API key must be a partner organisation API key in order for this API to
+        correctly function.
+
+        Args:
+            account_number: The account number to renew.
+            renewal_data: The renewal information. The format is documented in the octopus energy
+                          API documentation located at
+                          https://developer.octopus.energy/docs/api/#business-tariff-renewal
+
+        Returns:
+            A dictionary containing the account creation response.
+        """
+        return await self._post(["v1", "accounts", account_number, "tariff-renewal"], renewal_data)
 
     async def _get(self, url_parts: list, **kwargs) -> dict:
         return await self._execute(self.session.get, url_parts, **kwargs)
