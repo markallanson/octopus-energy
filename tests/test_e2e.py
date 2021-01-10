@@ -18,19 +18,23 @@ def mock_aioresponses():
 
 
 @pytest.mark.asyncio
-async def test_get_account_details_v1(mock_aioresponses: aioresponses):
-    async def get(client):
-        return await client.get_account_details("account_number")
+async def test_create_account_v1(mock_aioresponses: aioresponses):
+    async def post(client, request):
+        return await client.create_account(request)
 
-    await _run_get_test(
-        "v1/accounts/account_number", "account_response.json", get, mock_aioresponses
+    await _run_post_test(
+        "v1/accounts",
+        "create_account_request.json",
+        "create_account_response.json",
+        post,
+        mock_aioresponses,
     )
 
 
 @pytest.mark.asyncio
 async def test_create_quote_v1(mock_aioresponses: aioresponses):
-    async def post(client):
-        return await client.create_quote(load_fixture_json("create_quote_request.json"))
+    async def post(client, request):
+        return await client.create_quote(request)
 
     await _run_post_test(
         "v1/quotes",
@@ -38,6 +42,16 @@ async def test_create_quote_v1(mock_aioresponses: aioresponses):
         "create_quote_response.json",
         post,
         mock_aioresponses,
+    )
+
+
+@pytest.mark.asyncio
+async def test_get_account_details_v1(mock_aioresponses: aioresponses):
+    async def get(client):
+        return await client.get_account_details("account_number")
+
+    await _run_get_test(
+        "v1/accounts/account_number", "account_response.json", get, mock_aioresponses
     )
 
 
@@ -113,6 +127,20 @@ async def test_get_tariff_v1(mock_aioresponses: aioresponses):
     )
 
 
+@pytest.mark.asyncio
+async def test_renew_business_tariff(mock_aioresponses: aioresponses):
+    async def post(client, request):
+        return await client.renew_business_tariff("account_num", request)
+
+    await _run_post_test(
+        "v1/accounts/account_num/tariff-renewal",
+        "business_tariff_renewal_request.json",
+        "business_tariff_renewal_response.json",
+        post,
+        mock_aioresponses,
+    )
+
+
 async def _run_get_test(
     path: str, response_resource: str, func: Callable, mock_aioresponses: aioresponses
 ):
@@ -132,10 +160,11 @@ async def _run_post_test(
     func: Callable,
     mock_aioresponses: aioresponses,
 ):
+    request = load_fixture_json(request_resource)
     mock_aioresponses.post(
         f"{_API_BASE}/{path}",
         payload=load_fixture_json(response_resource),
     )
     async with OctopusEnergyRestClient(_FAKE_API_TOKEN) as client:
-        response = await func(client)
+        response = await func(client, request)
     assert response == load_fixture_json(response_resource)

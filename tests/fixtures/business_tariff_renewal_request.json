@@ -1,0 +1,43 @@
+{
+  "agreements": [
+    {
+      "mpxn": "1013004420117",
+      "tariff_code": "E-1R-SOME-PRODUCT-J",
+      "valid_from_date": "2019-12-01",
+      "valid_to_date": "2020-12-01",
+      "bespoke_tariff_rates": [
+        {
+          "meter_serial_number": "Z16N389556",
+          "standing_charge": 3.25,
+          "registers": [
+            {
+              "register_identifier": "1",
+              "unit_rate": 15.6
+            }
+          ]
+        }
+      ],
+      "commission": {
+        "affiliate_organisation_name": "Some Partner",
+        "unit_rate_uplift": "1.00"
+      }
+    },
+    {
+      "mpxn": "9113681703",
+      "tariff_code": "G-1R-SOME-PRODUCT-J",
+      "valid_from_date": "2019-12-01",
+      "valid_to_date": "2020-12-01",
+      "bespoke_tariff_rates": [
+        {
+          "meter_serial_number": "GA1244364577",
+          "standing_charge": 3.25,
+          "unit_rate": 15.6
+        }
+      ],
+      "commission": {
+        "affiliate_organisation_name": "Some Partner",
+        "unit_rate_uplift": "1.00"
+      }
+    }
+  ]
+}

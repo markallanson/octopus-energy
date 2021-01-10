@@ -1,0 +1,11 @@
+{
+  "account_number": "A-12AB34CD",
+  "agreements": [
+    {
+      "mpxn": "1013004420117",
+      "tariff_code": "E-1R-SOME-PRODUCT-J",
+      "valid_from_date": "2019-12-01",
+      "valid_to_date": "2020-12-01"
+    }
+  ]
+}
