@@ -39,8 +39,8 @@ api_token="sk_live_your-token"
 mprn = "your-mprn"
 serial_number = "your-meter-serial-number"
 
-client = OctopusEnergyClient(api_token)
-consumption = await client.get_gas_consumption_v1(mprn, serial_number)
+async with OctopusEnergyClient(api_token) as client:
+  consumption = await client.get_gas_consumption_v1(mprn, serial_number)
 ```
 
 [github]: https://github.com/markallanson/octopus-energy
