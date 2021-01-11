@@ -1,6 +1,8 @@
+from datetime import datetime
+
 from dateutil.parser import isoparse
 
-from octopus_energy.models import IntervalConsumption, UnitType, Consumption, MeterType
+from .models import IntervalConsumption, UnitType, Consumption, MeterType
 
 _CUBIC_METERS_TO_KWH_MULTIPLIER = 11.1868
 _KWH_TO_KWH_MULTIPLIER = 1
@@ -41,6 +43,18 @@ def consumption_from_response(
             for result in response["results"]
         ],
     )
+
+
+def to_timestamp_str(timestamp: datetime) -> str:
+    """Convert a datetime to an iso timestamp string expected by the octopus energy APIs.
+
+    Args:
+        timestamp: The timestamp to convert.
+
+    Returns:
+        The timestamp in a iso format required by the octopus energy APIs
+    """
+    return timestamp.replace(microsecond=0).isoformat() if timestamp else None
 
 
 def _calculate_unit(consumption, actual_unit, desired_unit):

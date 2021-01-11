@@ -1,3 +1,4 @@
+from datetime import datetime
 from functools import partial
 from http import HTTPStatus
 from typing import Optional, Callable
@@ -5,13 +6,14 @@ from typing import Optional, Callable
 from aiohttp import BasicAuth, ClientSession
 from furl import furl
 
-from octopus_energy.exceptions import (
+from .mappers import to_timestamp_str
+from .exceptions import (
     ApiError,
     ApiAuthenticationError,
     ApiNotFoundError,
     ApiBadRequestError,
 )
-from octopus_energy.models import RateType, EnergyTariffType
+from .models import RateType, EnergyTariffType, Aggregate, SortOrder
 
 _API_BASE = "https://api.octopus.energy"
 
@@ -106,19 +108,44 @@ class OctopusEnergyRestClient:
         """
         return await self._get(["v1", "accounts", account_number])
 
-    async def get_electricity_consumption_v1(self, mpan: str, serial_number: str) -> dict:
+    async def get_electricity_consumption_v1(
+        self,
+        mpan: str,
+        serial_number: str,
+        page_num: int = None,
+        page_size: int = None,
+        period_from: datetime = None,
+        period_to: datetime = None,
+        order: SortOrder = None,
+        aggregate: Aggregate = None,
+    ) -> dict:
         """Gets the consumption of electricity from a specific meter.
 
         Args:
             mpan: The MPAN (Meter Point Administration Number) of the location to query.
             serial_number: The serial number of the meter to query.
-
+            page_num: (Optional) The page number to load.
+            page_size: (Optional) How many results per page.
+            period_from: (Optional) The timestamp from where to begin returning results.
+            period_to: (Optional) The timestamp at which to end returning results.
+            order: (Optional) The ordering to apply to the results.
+            aggregate: (Optional) Over what period to aggregate the results. By default consumption
+                       results are aggregated half hourly. You can override this setting by
+                       explicitly stating an alternate aggregate.
         Returns:
             A dictionary containing the electricity consumption response.
 
         """
         return await self._get(
-            ["v1", "electricity-meter-points", mpan, "meters", serial_number, "consumption"]
+            ["v1", "electricity-meter-points", mpan, "meters", serial_number, "consumption"],
+            {
+                "page": page_num,
+                "page_size": page_size,
+                "period_from": to_timestamp_str(period_from),
+                "period_to": to_timestamp_str(period_to),
+                "order": order.value if order is not None else None,
+                "group_by": aggregate.value if aggregate is not None else None,
+            },
         )
 
     async def get_electricity_meter_points_v1(self, mpan: str) -> dict:
@@ -133,19 +160,44 @@ class OctopusEnergyRestClient:
         """
         return await self._get(["v1", "electricity-meter-points", mpan])
 
-    async def get_gas_consumption_v1(self, mprn: str, serial_number: str) -> dict:
+    async def get_gas_consumption_v1(
+        self,
+        mprn: str,
+        serial_number: str,
+        page_num: int = None,
+        page_size: int = None,
+        period_from: datetime = None,
+        period_to: datetime = None,
+        order: SortOrder = None,
+        aggregate: Aggregate = None,
+    ) -> dict:
         """Gets the consumption of gas from a specific meter.
 
         Args:
             mprn: The MPRN (Meter Point Reference Number) of the location to query.
             serial_number: The serial number of the meter to query.
-
+            page_num: (Optional) The page number to load.
+            page_size: (Optional) How many results per page.
+            period_from: (Optional) The timestamp from where to begin returning results.
+            period_to: (Optional) The timestamp at which to end returning results.
+            order: (Optional) The ordering to apply to the results.
+            aggregate: (Optional) Over what period to aggregate the results. By default consumption
+                       results are aggregated half hourly. You can override this setting by
+                       explicitly stating an alternate aggregate.
         Returns:
             A dictionary containing the gas consumption response.
 
         """
         return await self._get(
-            ["v1", "gas-meter-points", mprn, "meters", serial_number, "consumption"]
+            ["v1", "gas-meter-points", mprn, "meters", serial_number, "consumption"],
+            {
+                "page": page_num,
+                "page_size": page_size,
+                "period_from": to_timestamp_str(period_from),
+                "period_to": to_timestamp_str(period_to),
+                "order": order.value if order is not None else None,
+                "group_by": aggregate.value if aggregate is not None else None,
+            },
         )
 
     async def get_products_v1(self) -> dict:
@@ -209,16 +261,21 @@ class OctopusEnergyRestClient:
         """
         return await self._post(["v1", "accounts", account_number, "tariff-renewal"], renewal_data)
 
-    async def _get(self, url_parts: list, **kwargs) -> dict:
-        return await self._execute(self.session.get, url_parts, **kwargs)
+    async def _get(self, url_parts: list, query_params: dict = {}, **kwargs) -> dict:
+        return await self._execute(self.session.get, url_parts, query_params, **kwargs)
 
-    async def _post(self, url_parts: list, data: dict, **kwargs) -> dict:
-        return await self._execute(partial(self.session.post, data=data), url_parts, **kwargs)
+    async def _post(self, url_parts: list, data: dict, query_params: dict = {}, **kwargs) -> dict:
+        return await self._execute(
+            partial(self.session.post, data=data), url_parts, query_params, **kwargs
+        )
 
-    async def _execute(self, func: Callable, url_parts: list, **kwargs) -> dict:
+    async def _execute(
+        self, func: Callable, url_parts: list, query_params: dict = {}, **kwargs
+    ) -> dict:
         """Executes an API call to Octopus energy and maps the response."""
         url = self.base_url.copy()
         url.path.segments.extend(url_parts)
+        url.query.params.update(query_params)
         response = await func(url=str(url), **kwargs)
         if response.status > 399:
             if response.status == HTTPStatus.UNAUTHORIZED:

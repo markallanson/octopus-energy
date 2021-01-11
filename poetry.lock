@@ -151,6 +151,17 @@ pycodestyle = ">=2.6.0a1,<2.7.0"
 pyflakes = ">=2.2.0,<2.3.0"
 
 [[package]]
+name = "freezegun"
+version = "1.0.0"
+description = "Let your Python tests travel through time"
+category = "dev"
+optional = false
+python-versions = ">=3.5"
+
+[package.dependencies]
+python-dateutil = ">=2.7"
+
+[[package]]
 name = "furl"
 version = "2.1.0"
 description = "URL manipulation made simple."
@@ -508,7 +519,7 @@ testing = ["pytest (>=3.5,!=3.7.3)", "pytest-checkdocs (>=1.2.3)", "pytest-flake
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "7da58ed905fc37beeb67d9d82208ddb88a62eb6871e9b7462393359d57b7fe84"
+content-hash = "afc545962c6bce3f5fdbf89b1afd8288373dc55c1ae1c5f9f3f856192827b270"
 
 [metadata.files]
 aiohttp = [
@@ -600,6 +611,10 @@ filelock = [
 flake8 = [
     {file = "flake8-3.8.4-py2.py3-none-any.whl", hash = "sha256:749dbbd6bfd0cf1318af27bf97a14e28e5ff548ef8e5b1566ccfb25a11e7c839"},
     {file = "flake8-3.8.4.tar.gz", hash = "sha256:aadae8761ec651813c24be05c6f7b4680857ef6afaae4651a4eccaef97ce6c3b"},
+]
+freezegun = [
+    {file = "freezegun-1.0.0-py2.py3-none-any.whl", hash = "sha256:02b35de52f4699a78f6ac4518e4cd3390dddc43b0aeb978335a8f270a2d9668b"},
+    {file = "freezegun-1.0.0.tar.gz", hash = "sha256:1cf08e441f913ff5e59b19cc065a8faa9dd1ddc442eaf0375294f344581a0643"},
 ]
 furl = [
     {file = "furl-2.1.0-py2.py3-none-any.whl", hash = "sha256:f4d6f1e5479c376a5b7bdc62795d736d8c1b2a754f366a2ad2816e46e946e22e"},
