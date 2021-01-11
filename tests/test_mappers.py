@@ -7,6 +7,7 @@ from dateutil.tz import tzoffset
 from octopus_energy.mappers import (
     _calculate_unit,
     consumption_from_response,
+    to_timestamp_str,
 )
 from octopus_energy.models import UnitType, MeterType
 from tests import load_fixture_json
@@ -136,6 +137,17 @@ class TestMappers(TestCase):
             self.assertEqual(len(consumption.intervals), 0, "Contains 0 periods of consumption")
         with self.subTest("units"):
             self.assertEqual(consumption.unit_type, UnitType.KWH)
+
+
+def test_timestamp_format():
+    """Verifies timestamps.
+
+    * microseconds are stripped
+    * formatted as iso8601
+    """
+    timestamp = datetime.utcnow().replace(microsecond=0)
+    str = to_timestamp_str(timestamp)
+    assert str == timestamp.isoformat()
 
 
 @pytest.mark.parametrize(

@@ -1,10 +1,13 @@
+from datetime import datetime
 from typing import Callable
 
 import pytest
 from aioresponses import aioresponses
+from dateutil.tz import tzoffset
+from freezegun import freeze_time
 
 from octopus_energy import OctopusEnergyRestClient
-from octopus_energy.models import EnergyTariffType, RateType
+from octopus_energy.models import EnergyTariffType, RateType, SortOrder, Aggregate
 from octopus_energy.rest_client import _API_BASE
 from tests import load_fixture_json
 
@@ -55,13 +58,25 @@ async def test_get_account_details_v1(mock_aioresponses: aioresponses):
     )
 
 
+@freeze_time("2021-01-01 01:11:11")
 @pytest.mark.asyncio
 async def test_get_elec_consumption_v1(mock_aioresponses: aioresponses):
     async def get(client):
-        return await client.get_electricity_consumption_v1("mpan", "serial_number")
+        return await client.get_electricity_consumption_v1(
+            "mpan",
+            "serial_number",
+            page_num=1,
+            page_size=10,
+            period_from=datetime.now(tz=tzoffset("CEST", 2)),
+            period_to=datetime.now(tz=tzoffset("CEST", 2)),
+            order=SortOrder.NEWEST_FIRST,
+            aggregate=Aggregate.DAY,
+        )
 
     await _run_get_test(
-        "v1/electricity-meter-points/mpan/meters/serial_number/consumption",
+        "v1/electricity-meter-points/mpan/meters/serial_number/consumption?page=1&page_size=10"
+        "&period_from=2021-01-01T01%3A11%3A13%2B00%3A00%3A02"
+        "&period_to=2021-01-01T01%3A11%3A13%2B00%3A00%3A02&order=-period&group_by=day",
         "consumption_response.json",
         get,
         mock_aioresponses,
@@ -81,13 +96,25 @@ async def test_get_electricity_meter_points_v1(mock_aioresponses: aioresponses):
     )
 
 
+@freeze_time("2021-01-01 01:11:11")
 @pytest.mark.asyncio
 async def test_get_gas_consumption_v1(mock_aioresponses: aioresponses):
     async def get(client):
-        return await client.get_gas_consumption_v1("mprn", "serial_number")
+        return await client.get_gas_consumption_v1(
+            "mprn",
+            "serial_number",
+            page_num=1,
+            page_size=10,
+            period_from=datetime.now(tz=tzoffset("CEST", 2)),
+            period_to=datetime.now(tz=tzoffset("CEST", 2)),
+            order=SortOrder.NEWEST_FIRST,
+            aggregate=Aggregate.DAY,
+        )
 
     await _run_get_test(
-        "v1/gas-meter-points/mprn/meters/serial_number/consumption",
+        "v1/gas-meter-points/mprn/meters/serial_number/consumption?page=1&page_size=10"
+        "&period_from=2021-01-01T01%3A11%3A13%2B00%3A00%3A02"
+        "&period_to=2021-01-01T01%3A11%3A13%2B00%3A00%3A02&order=-period&group_by=day",
         "consumption_response.json",
         get,
         mock_aioresponses,

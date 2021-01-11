@@ -108,3 +108,42 @@ class RateType(_DocEnum):
         "night-unit-rates",
         "Represents the rate charged during the night for dual rate tariffs.",
     )
+
+
+class SortOrder(_DocEnum):
+    """The order to use when sorting results from search type API alls"""
+
+    NEWEST_FIRST = (
+        "-period",
+        "Newest result first",
+    )
+    OLDEST_FIRST = (
+        "period",
+        "Oldest result first",
+    )
+
+
+class Aggregate(_DocEnum):
+    """How to aggregate data returned from consumption based APIs"""
+
+    HALF_HOURLY = None, "Aggregate consumption half hourly (the default)"
+    HOUR = (
+        "hour",
+        "Aggregate consumption by hours",
+    )
+    DAY = (
+        "day",
+        "Aggregate consumption by days",
+    )
+    WEEK = (
+        "week",
+        "Aggregate consumption by weeks",
+    )
+    MONTH = (
+        "month",
+        "Aggregate consumption by months",
+    )
+    QUARTER = (
+        "quarter",
+        "Aggregate consumption quarterly",
+    )
