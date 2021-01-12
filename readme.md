@@ -29,8 +29,10 @@ You can obtain your API token and meter information from the [Octopus Energy Dev
 Dashboard][octo dashboard].
 
 ### REST Client Wrapper
-The REST client wrapper is a slim shim over the REST API that returns dictionaries as responses. This is perfect if you
-want something quick and dirty.
+The REST client wrapper is a slim shim over the REST API that returns dictionaries as responses. 
+
+Note that you should reference the [Octopus Energy API documentation][octo api] for detailed notes on the API responses  
+and specifics around the request parameters.
 
 ```python
 from octopus_energy import OctopusEnergyRestClient
@@ -39,9 +41,10 @@ api_token="sk_live_your-token"
 mprn = "your-mprn"
 serial_number = "your-meter-serial-number"
 
-async with OctopusEnergyClient(api_token) as client:
+async with OctopusEnergyRestClient(api_token) as client:
   consumption = await client.get_gas_consumption_v1(mprn, serial_number)
 ```
 
 [github]: https://github.com/markallanson/octopus-energy
 [octo dashboard]: https://octopus.energy/dashboard/developer/
+[octo api]: https://developer.octopus.energy/docs/api/
