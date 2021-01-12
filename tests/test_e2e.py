@@ -121,33 +121,65 @@ async def test_get_gas_consumption_v1(mock_aioresponses: aioresponses):
     )
 
 
+@freeze_time("2021-01-01 01:11:11")
 @pytest.mark.asyncio
 async def test_get_products_v1(mock_aioresponses: aioresponses):
     async def get(client):
-        return await client.get_products_v1()
-
-    await _run_get_test("v1/products", "get_products_response.json", get, mock_aioresponses)
-
-
-@pytest.mark.asyncio
-async def test_get_product_v1(mock_aioresponses: aioresponses):
-    async def get(client):
-        return await client.get_product_v1("product_id")
+        return await client.get_products_v1(
+            page_num=1,
+            page_size=10,
+            is_business=True,
+            is_green=True,
+            is_tracker=True,
+            is_variable=True,
+            is_prepay=True,
+            available_at=datetime.now(tz=tzoffset("CEST", 2)),
+        )
 
     await _run_get_test(
-        "v1/products/product_id", "get_product_response.json", get, mock_aioresponses
+        "v1/products?page=1&page_size=10&is_variable=True&is_green=True&is_tracker=True"
+        "&is_prepay=True&is_business=True&available_at=2021-01-01T01%3A11%3A13%2B00%3A00%3A02",
+        "get_products_response.json",
+        get,
+        mock_aioresponses,
     )
 
 
+@freeze_time("2021-01-01 01:11:11")
+@pytest.mark.asyncio
+async def test_get_product_v1(mock_aioresponses: aioresponses):
+    async def get(client):
+        return await client.get_product_v1(
+            "product_id", tariffs_active_at=datetime.now(tz=tzoffset("CEST", 2))
+        )
+
+    await _run_get_test(
+        "v1/products/product_id?tariffs_active_at=2021-01-01T01%3A11%3A13%2B00%3A00%3A02",
+        "get_product_response.json",
+        get,
+        mock_aioresponses,
+    )
+
+
+@freeze_time("2021-01-01 01:11:11")
 @pytest.mark.asyncio
 async def test_get_tariff_v1(mock_aioresponses: aioresponses):
     async def get(client):
         return await client.get_tariff_v1(
-            "product_id", EnergyTariffType.GAS, "tariff_code", RateType.STANDING_CHARGES
+            "product_id",
+            EnergyTariffType.GAS,
+            "tariff_code",
+            RateType.STANDING_CHARGES,
+            page_num=1,
+            page_size=10,
+            period_from=datetime.now(tz=tzoffset("CEST", 2)),
+            period_to=datetime.now(tz=tzoffset("CEST", 2)),
         )
 
     await _run_get_test(
-        "v1/products/product_id/gas-tariffs/tariff_code/standing-charges",
+        "v1/products/product_id/gas-tariffs/tariff_code/standing-charges?page=1&page_size=10"
+        "&period_from=2021-01-01T01%3A11%3A13%2B00%3A00%3A02"
+        "&period_to=2021-01-01T01%3A11%3A13%2B00%3A00%3A02",
         "get_tariff_response.json",
         get,
         mock_aioresponses,

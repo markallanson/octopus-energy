@@ -200,26 +200,69 @@ class OctopusEnergyRestClient:
             },
         )
 
-    async def get_products_v1(self) -> dict:
+    async def get_products_v1(
+        self,
+        page_num: int = None,
+        page_size: int = None,
+        is_variable: bool = None,
+        is_green: bool = None,
+        is_tracker: bool = None,
+        is_prepay: bool = None,
+        is_business: bool = None,
+        available_at: datetime = None,
+    ) -> dict:
         """Gets octopus energy products.
+
+        Args:
+            page_num: (Optional) The page number to load.
+            page_size: (Optional) How many results per page.
+            is_variable (Optional): Activate filter and include variable products in the results.
+            is_green (Optional): Activate filter and include green products in the results.
+            is_tracker (Optional): Activate filter and include tracker products in the results.
+            is_prepay (Optional): Activate filter and include prepay products in the results.
+            is_business (Optional): Activate filter and include business products in the results.
+            available_at (Optional): Include products available for new agreements on the given
+                                     timestamp. Defaults to current datetime, effectively showing
+                                     products that are currently available.
 
         Returns:
             A dictionary containing the products response.
 
         """
-        return await self._get(["v1", "products"])
+        return await self._get(
+            ["v1", "products"],
+            {
+                "page": page_num,
+                "page_size": page_size,
+                "is_variable": is_variable,
+                "is_green": is_green,
+                "is_tracker": is_tracker,
+                "is_prepay": is_prepay,
+                "is_business": is_business,
+                "available_at": to_timestamp_str(available_at) if available_at else None,
+            },
+        )
 
-    async def get_product_v1(self, product_code: str) -> dict:
+    async def get_product_v1(self, product_code: str, tariffs_active_at: datetime = None) -> dict:
         """Gets detailed information about a specific octopus energy product.
 
         Args:
             product_code: The product code to retrieve.
+            tariffs_active_at (Optional): If specified, returns the tariff rates at the timestamp
+                                          requested.
 
         Returns:
             A dictionary containing the product details response.
 
         """
-        return await self._get(["v1", "products", product_code])
+        return await self._get(
+            ["v1", "products", product_code],
+            {
+                "tariffs_active_at": to_timestamp_str(tariffs_active_at)
+                if tariffs_active_at is not None
+                else None
+            },
+        )
 
     async def get_tariff_v1(
         self,
@@ -227,6 +270,10 @@ class OctopusEnergyRestClient:
         tariff_type: EnergyTariffType,
         tariff_code: str,
         rate_type: RateType,
+        page_num: int = None,
+        page_size: int = None,
+        period_from: datetime = None,
+        period_to: datetime = None,
     ) -> dict:
         """Gets tariff information about a specific octopus energy tariff.
 
@@ -235,13 +282,23 @@ class OctopusEnergyRestClient:
             tariff_type: The type of tariff to get the details of.
             tariff_code: The tariff code to get the details of.
             rate_type: The rate within the tariff to retrieve.
+            page_num: (Optional) The page number to load.
+            page_size: (Optional) How many results per page.
+            period_from: (Optional) The timestamp (inclusive) from where to begin returning results.
+            period_to: (Optional) The timestamp (exclusive) at which to end returning results.
 
         Returns:
             A dictionary containing the tariff details response.
 
         """
         return await self._get(
-            ["v1", "products", product_code, tariff_type.value, tariff_code, rate_type.value]
+            ["v1", "products", product_code, tariff_type.value, tariff_code, rate_type.value],
+            {
+                "page": page_num,
+                "page_size": page_size,
+                "period_from": to_timestamp_str(period_from),
+                "period_to": to_timestamp_str(period_to),
+            },
         )
 
     async def renew_business_tariff(self, account_number: str, renewal_data: dict) -> dict:
