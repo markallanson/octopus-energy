@@ -332,7 +332,7 @@ class OctopusEnergyRestClient:
         """Executes an API call to Octopus energy and maps the response."""
         url = self.base_url.copy()
         url.path.segments.extend(url_parts)
-        url.query.params.update(query_params)
+        url.query.params.update({p: v for p, v in query_params.items() if v is not None})
         response = await func(url=str(url), **kwargs)
         if response.status > 399:
             if response.status == HTTPStatus.UNAUTHORIZED:
