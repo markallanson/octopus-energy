@@ -2,8 +2,10 @@ import json
 import os
 from asyncio import get_event_loop
 
+import jsonpickle
 
-def load_fixture(filename: str) -> str:
+
+def load_json(filename: str) -> str:
     """Load a fixture for a test from the fixtures directory.
 
     Args:
@@ -12,7 +14,7 @@ def load_fixture(filename: str) -> str:
     Returns:
         The content of the file
     """
-    path = os.path.join(os.path.dirname(__file__), "fixtures", filename)
+    path = os.path.join(os.path.dirname(__file__), filename)
     with open(path) as fptr:
         return fptr.read()
 
@@ -26,7 +28,7 @@ def load_fixture_json(filename: str) -> dict:
     Returns:
         The content of the file parsed as json.
     """
-    return json.loads(load_fixture(filename))
+    return json.loads(load_json(os.path.join("fixtures", filename)))
 
 
 def does_asyncio(func):

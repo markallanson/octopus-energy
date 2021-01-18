@@ -1,22 +1,39 @@
+import os
 from datetime import datetime
 from unittest import TestCase
+from unittest.mock import Mock
 
-import pytest
+import jsonpickle
 from dateutil.tz import tzoffset
 
 from octopus_energy.mappers import (
     _calculate_unit,
     consumption_from_response,
     to_timestamp_str,
+    meters_from_response,
 )
-from octopus_energy.models import UnitType, MeterType
-from tests import load_fixture_json
+from octopus_energy.models import UnitType, MeterGeneration
+from tests import load_fixture_json, load_json
 
 
-class TestMappers(TestCase):
+def load_mapping_response_json(filename: str) -> dict:
+    return jsonpickle.decode(load_json(os.path.join("mapping_results", filename)))
+
+
+class TestAccountMappers(TestCase):
+    def test_account_mapping(self):
+        """Verifies that the result of mapping a known input produces a known output."""
+        meters = meters_from_response(load_fixture_json("account_response.json"))
+        expected_response = load_mapping_response_json("account_mapping.json")
+        self.assertCountEqual(meters, expected_response)
+
+
+class TestConsumptionMappers(TestCase):
     def test_smets1_gas_mapping_kwh(self):
         response = load_fixture_json("consumption_response.json")
-        consumption = consumption_from_response(response, MeterType.SMETS1_GAS, UnitType.KWH)
+        consumption = consumption_from_response(
+            response, Mock(generation=MeterGeneration.SMETS1_GAS), UnitType.KWH
+        )
         with self.subTest("interval count"):
             self.assertEqual(len(consumption.intervals), 3, "Contains 3 periods of consumption")
         with self.subTest("units"):
@@ -37,7 +54,7 @@ class TestMappers(TestCase):
     def test_smets1_gas_mapping_cubic_meters(self):
         response = load_fixture_json("consumption_response.json")
         consumption = consumption_from_response(
-            response, MeterType.SMETS1_GAS, UnitType.CUBIC_METERS
+            response, Mock(generation=MeterGeneration.SMETS1_GAS), UnitType.CUBIC_METERS
         )
         with self.subTest("units"):
             self.assertEqual(consumption.unit_type, UnitType.CUBIC_METERS)
@@ -46,7 +63,9 @@ class TestMappers(TestCase):
 
     def test_smets2_gas_mapping_kwh(self):
         response = load_fixture_json("consumption_response.json")
-        consumption = consumption_from_response(response, MeterType.SMETS2_GAS, UnitType.KWH)
+        consumption = consumption_from_response(
+            response, Mock(generation=MeterGeneration.SMETS2_GAS), UnitType.KWH
+        )
         with self.subTest("interval count"):
             self.assertEqual(len(consumption.intervals), 3, "Contains 3 periods of consumption")
         with self.subTest("units"):
@@ -67,7 +86,7 @@ class TestMappers(TestCase):
     def test_smets2_gas_mapping_cubic_meters(self):
         response = load_fixture_json("consumption_response.json")
         consumption = consumption_from_response(
-            response, MeterType.SMETS2_GAS, UnitType.CUBIC_METERS
+            response, Mock(generation=MeterGeneration.SMETS2_GAS), UnitType.CUBIC_METERS
         )
         with self.subTest("units"):
             self.assertEqual(consumption.unit_type, UnitType.CUBIC_METERS)
@@ -77,7 +96,7 @@ class TestMappers(TestCase):
     def test_smets1_elec_mapping(self):
         response = load_fixture_json("consumption_response.json")
         consumption = consumption_from_response(
-            response, MeterType.SMETS1_ELECTRICITY, UnitType.KWH
+            response, Mock(generation=MeterGeneration.SMETS1_ELECTRICITY), UnitType.KWH
         )
         with self.subTest("interval count"):
             self.assertEqual(len(consumption.intervals), 3, "Contains 3 periods of consumption")
@@ -99,7 +118,7 @@ class TestMappers(TestCase):
     def test_smets2_elec_mapping(self):
         response = load_fixture_json("consumption_response.json")
         consumption = consumption_from_response(
-            response, MeterType.SMETS2_ELECTRICITY, UnitType.KWH
+            response, Mock(generation=MeterGeneration.SMETS2_ELECTRICITY), UnitType.KWH
         )
         with self.subTest("interval count"):
             self.assertEqual(len(consumption.intervals), 3, "Contains 3 periods of consumption")
@@ -121,7 +140,9 @@ class TestMappers(TestCase):
     def test_consumption_no_intervals(self):
         response = load_fixture_json("consumption_no_results_response.json")
         consumption = consumption_from_response(
-            response, meter_type=MeterType.SMETS1_GAS, desired_unit_type=UnitType.KWH
+            response,
+            meter=Mock(generation=MeterGeneration.SMETS1_GAS),
+            desired_unit_type=UnitType.KWH,
         )
         with self.subTest("interval count"):
             self.assertEqual(len(consumption.intervals), 0, "Contains 0 periods of consumption")
@@ -131,34 +152,31 @@ class TestMappers(TestCase):
     def test_consumption_missing_intervals(self):
         response = load_fixture_json("consumption_missing_results_response.json")
         consumption = consumption_from_response(
-            response, meter_type=MeterType.SMETS1_GAS, desired_unit_type=UnitType.KWH
+            response,
+            meter=Mock(generation=MeterGeneration.SMETS1_GAS),
+            desired_unit_type=UnitType.KWH,
         )
         with self.subTest("interval count"):
             self.assertEqual(len(consumption.intervals), 0, "Contains 0 periods of consumption")
         with self.subTest("units"):
             self.assertEqual(consumption.unit_type, UnitType.KWH)
 
+    def test_timestamp_format(self):
+        """Verifies timestamps.
 
-def test_timestamp_format():
-    """Verifies timestamps.
+        * microseconds are stripped
+        * formatted as iso8601
+        """
+        timestamp = datetime.utcnow().replace(microsecond=0)
+        str = to_timestamp_str(timestamp)
+        assert str == timestamp.isoformat()
 
-    * microseconds are stripped
-    * formatted as iso8601
-    """
-    timestamp = datetime.utcnow().replace(microsecond=0)
-    str = to_timestamp_str(timestamp)
-    assert str == timestamp.isoformat()
-
-
-@pytest.mark.parametrize(
-    "source_unit_type,desired_unit_type,source_unit,desired_unit",
-    [
-        (UnitType.CUBIC_METERS, UnitType.KWH, 100, 1118.68),
-        (UnitType.KWH, UnitType.CUBIC_METERS, 100, 8.9391068044481),
-        (UnitType.KWH, UnitType.KWH, 100, 100),
-        (UnitType.CUBIC_METERS, UnitType.CUBIC_METERS, 100, 100),
-    ],
-)
-def test_conversions(source_unit_type, desired_unit_type, source_unit, desired_unit):
-    """Tests the unit conversions supported by the library."""
-    assert _calculate_unit(source_unit, source_unit_type, desired_unit_type) == desired_unit
+    def test_conversions(self):
+        """Tests the unit conversions supported by the library."""
+        for test in [
+            (UnitType.CUBIC_METERS, UnitType.KWH, 100, 1118.68),
+            (UnitType.KWH, UnitType.CUBIC_METERS, 100, 8.9391068044481),
+            (UnitType.KWH, UnitType.KWH, 100, 100),
+            (UnitType.CUBIC_METERS, UnitType.CUBIC_METERS, 100, 100),
+        ]:
+            self.assertEqual(_calculate_unit(test[2], test[0], test[1]), test[3])

@@ -1,16 +1,26 @@
 """Python client for the Octopus Energy RESTful API"""
 
-from .rest_client import OctopusEnergyRestClient
 from .models import (
-    Consumption,
-    IntervalConsumption,
-    MeterType,
-    UnitType,
+    Address,
     Aggregate,
-    SortOrder,
+    Consumption,
+    EnergyType,
+    EnergyTariffType,
+    IntervalConsumption,
+    Meter,
+    MeterDirection,
+    MeterGeneration,
+    MeterPoint,
     RateType,
+    SortOrder,
+    Tariff,
+    UnitType,
+    ElectricityMeter,
+    GasMeter,
 )
 from .exceptions import ApiAuthenticationError, ApiError, ApiNotFoundError, ApiBadRequestError
+from .rest_client import OctopusEnergyRestClient
+from .client import OctopusEnergyConsumerClient
 
 __all__ = [
     "OctopusEnergyRestClient",
@@ -20,9 +30,19 @@ __all__ = [
     "ApiBadRequestError",
     "Consumption",
     "IntervalConsumption",
-    "MeterType",
+    "MeterGeneration",
     "UnitType",
     "Aggregate",
     "SortOrder",
     "RateType",
+    "Meter",
+    "EnergyType",
+    "EnergyTariffType",
+    "OctopusEnergyConsumerClient",
+    "Tariff",
+    "MeterDirection",
+    "MeterPoint",
+    "Address",
+    "ElectricityMeter",
+    "GasMeter",
 ]
