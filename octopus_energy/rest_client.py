@@ -45,7 +45,7 @@ class OctopusEnergyRestClient:
         )
 
     def __enter__(self):
-        raise TypeError("Use async context manager (await with) instead")
+        raise TypeError("Use async context manager (async with) instead")
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         pass
@@ -340,6 +340,6 @@ class OctopusEnergyRestClient:
             if response.status == HTTPStatus.NOT_FOUND:
                 raise ApiNotFoundError()
             if response.status == HTTPStatus.BAD_REQUEST:
-                raise ApiBadRequestError()
+                raise ApiBadRequestError(response)
             raise ApiError(response, "API Call Failed")
         return await response.json()

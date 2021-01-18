@@ -1,0 +1,374 @@
+[
+  {
+    "py/object": "octopus_energy.models.ElectricityMeter",
+    "meter_point": {
+      "py/object": "octopus_energy.models.MeterPoint",
+      "id": "9999999999999",
+      "address": {
+        "py/object": "octopus_energy.models.Address",
+        "line_1": "XXXXXXX",
+        "line_2": "YYYYYYY",
+        "line_3": "ZZZZZZZ",
+        "county": "AAAAAAA",
+        "town": "ANYTOWN GB",
+        "postcode": "AA1 1AA",
+        "active": true
+      }
+    },
+    "serial_number": "ESESESESES",
+    "energy_type": {
+      "py/reduce": [
+        {
+          "py/type": "octopus_energy.models.EnergyType"
+        },
+        {
+          "py/tuple": [
+            "electricity"
+          ]
+        }
+      ]
+    },
+    "generation": {
+      "py/reduce": [
+        {
+          "py/type": "octopus_energy.models.MeterGeneration"
+        },
+        {
+          "py/tuple": [
+            {
+              "py/tuple": [
+                "SMETS1_ELECTRICITY",
+                {
+                  "py/reduce": [
+                    {
+                      "py/type": "octopus_energy.models.UnitType"
+                    },
+                    {
+                      "py/tuple": [
+                        {
+                          "py/tuple": [
+                            "kWh",
+                            "Kilowatt Hours"
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "1st Generation Smart Electricity Meter"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "tariffs": [
+      {
+        "py/object": "octopus_energy.models.Tariff",
+        "code": "E-1R-VAR-16-10-31-A",
+        "valid_from": {
+          "py/object": "datetime.datetime",
+          "__reduce__": [
+            {
+              "py/type": "datetime.datetime"
+            },
+            [
+              "B+EBAgAAAAAAAA==",
+              {
+                "py/reduce": [
+                  {
+                    "py/function": "copyreg._reconstructor"
+                  },
+                  {
+                    "py/tuple": [
+                      {
+                        "py/type": "dateutil.tz.tz.tzutc"
+                      },
+                      {
+                        "py/type": "datetime.tzinfo"
+                      },
+                      {
+                        "py/reduce": [
+                          {
+                            "py/type": "datetime.tzinfo"
+                          },
+                          {
+                            "py/tuple": []
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          ]
+        },
+        "valid_to": {
+          "py/object": "datetime.datetime",
+          "__reduce__": [
+            {
+              "py/type": "datetime.datetime"
+            },
+            [
+              "B+ICEAAAAAAAAA==",
+              {
+                "py/id": 10
+              }
+            ]
+          ]
+        }
+      },
+      {
+        "py/object": "octopus_energy.models.Tariff",
+        "code": "E-1R-VAR-17-01-11-A",
+        "valid_from": {
+          "py/object": "datetime.datetime",
+          "__reduce__": [
+            {
+              "py/type": "datetime.datetime"
+            },
+            [
+              "B+ICEAAAAAAAAA==",
+              {
+                "py/id": 10
+              }
+            ]
+          ]
+        },
+        "valid_to": null
+      }
+    ],
+    "direction": {
+      "py/reduce": [
+        {
+          "py/type": "octopus_energy.models.MeterDirection"
+        },
+        {
+          "py/tuple": [
+            "import"
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "py/object": "octopus_energy.models.ElectricityMeter",
+    "meter_point": {
+      "py/object": "octopus_energy.models.MeterPoint",
+      "id": "9999999999999",
+      "address": {
+        "py/id": 3
+      }
+    },
+    "serial_number": "ESESESESES",
+    "energy_type": {
+      "py/id": 4
+    },
+    "generation": {
+      "py/id": 5
+    },
+    "tariffs": [
+      {
+        "py/object": "octopus_energy.models.Tariff",
+        "code": "E-1R-VAR-16-10-31-A",
+        "valid_from": {
+          "py/object": "datetime.datetime",
+          "__reduce__": [
+            {
+              "py/type": "datetime.datetime"
+            },
+            [
+              "B+EBAgAAAAAAAA==",
+              {
+                "py/id": 10
+              }
+            ]
+          ]
+        },
+        "valid_to": {
+          "py/object": "datetime.datetime",
+          "__reduce__": [
+            {
+              "py/type": "datetime.datetime"
+            },
+            [
+              "B+ICEAAAAAAAAA==",
+              {
+                "py/id": 10
+              }
+            ]
+          ]
+        }
+      },
+      {
+        "py/object": "octopus_energy.models.Tariff",
+        "code": "E-1R-VAR-17-01-11-A",
+        "valid_from": {
+          "py/object": "datetime.datetime",
+          "__reduce__": [
+            {
+              "py/type": "datetime.datetime"
+            },
+            [
+              "B+ICEAAAAAAAAA==",
+              {
+                "py/id": 10
+              }
+            ]
+          ]
+        },
+        "valid_to": null
+      }
+    ],
+    "direction": {
+      "py/id": 15
+    }
+  },
+  {
+    "py/object": "octopus_energy.models.ElectricityMeter",
+    "meter_point": {
+      "py/object": "octopus_energy.models.MeterPoint",
+      "id": "EXPORT_MPAN",
+      "address": {
+        "py/id": 3
+      }
+    },
+    "serial_number": "EXPORT_SN",
+    "energy_type": {
+      "py/id": 4
+    },
+    "generation": {
+      "py/id": 5
+    },
+    "tariffs": [
+      {
+        "py/object": "octopus_energy.models.Tariff",
+        "code": "E-1R-VAR-17-01-11-A",
+        "valid_from": {
+          "py/object": "datetime.datetime",
+          "__reduce__": [
+            {
+              "py/type": "datetime.datetime"
+            },
+            [
+              "B+ICEAAAAAAAAA==",
+              {
+                "py/id": 10
+              }
+            ]
+          ]
+        },
+        "valid_to": null
+      }
+    ],
+    "direction": {
+      "py/reduce": [
+        {
+          "py/type": "octopus_energy.models.MeterDirection"
+        },
+        {
+          "py/tuple": [
+            "export"
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "py/object": "octopus_energy.models.GasMeter",
+    "meter_point": {
+      "py/object": "octopus_energy.models.MeterPoint",
+      "id": "9999999999",
+      "address": {
+        "py/id": 3
+      }
+    },
+    "serial_number": "GSGSGSGSGSGSGS",
+    "energy_type": {
+      "py/reduce": [
+        {
+          "py/type": "octopus_energy.models.EnergyType"
+        },
+        {
+          "py/tuple": [
+            "gas"
+          ]
+        }
+      ]
+    },
+    "generation": {
+      "py/reduce": [
+        {
+          "py/type": "octopus_energy.models.MeterGeneration"
+        },
+        {
+          "py/tuple": [
+            {
+              "py/tuple": [
+                "SMETS1_GAS",
+                {
+                  "py/id": 6
+                },
+                "1st Generation Smart Gas Meter"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "tariffs": [
+      {
+        "py/object": "octopus_energy.models.Tariff",
+        "code": "G-1R-VAR-16-10-31-A",
+        "valid_from": {
+          "py/object": "datetime.datetime",
+          "__reduce__": [
+            {
+              "py/type": "datetime.datetime"
+            },
+            [
+              "B+EBAgAAAAAAAA==",
+              {
+                "py/id": 10
+              }
+            ]
+          ]
+        },
+        "valid_to": {
+          "py/object": "datetime.datetime",
+          "__reduce__": [
+            {
+              "py/type": "datetime.datetime"
+            },
+            [
+              "B+ICEAAAAAAAAA==",
+              {
+                "py/id": 10
+              }
+            ]
+          ]
+        }
+      },
+      {
+        "py/object": "octopus_energy.models.Tariff",
+        "code": "G-1R-VAR-17-01-11-A",
+        "valid_from": {
+          "py/object": "datetime.datetime",
+          "__reduce__": [
+            {
+              "py/type": "datetime.datetime"
+            },
+            [
+              "B+ICEAAAAAAAAA==",
+              {
+                "py/id": 10
+              }
+            ]
+          ]
+        },
+        "valid_to": null
+      }
+    ]
+  }
+]

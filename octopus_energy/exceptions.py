@@ -6,7 +6,7 @@ class ApiError(Exception):
         self.message = message
 
     def __str__(self) -> str:
-        return f"{self.response.status} - {self.response.text}"
+        return f"{self.response.status}: {self.response.text}"
 
 
 class ApiAuthenticationError(Exception):
@@ -15,7 +15,7 @@ class ApiAuthenticationError(Exception):
     pass
 
 
-class ApiBadRequestError(Exception):
+class ApiBadRequestError(ApiError):
     """Data posted to an API is incorrect. Typically the response code was 400."""
 
     pass
