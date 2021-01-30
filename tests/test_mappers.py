@@ -11,8 +11,9 @@ from octopus_energy.mappers import (
     consumption_from_response,
     to_timestamp_str,
     meters_from_response,
+    _get_page_reference,
 )
-from octopus_energy.models import UnitType, MeterGeneration
+from octopus_energy.models import UnitType, MeterGeneration, SortOrder, Aggregate
 from tests import load_fixture_json, load_json
 
 
@@ -21,6 +22,10 @@ def load_mapping_response_json(filename: str) -> dict:
 
 
 class TestAccountMappers(TestCase):
+    def __init__(self, methodName: str = ...) -> None:
+        super().__init__(methodName)
+        self.maxDiff = None
+
     def test_account_mapping(self):
         """Verifies that the result of mapping a known input produces a known output."""
         meters = meters_from_response(load_fixture_json("account_response.json"))
@@ -178,5 +183,65 @@ class TestConsumptionMappers(TestCase):
             (UnitType.KWH, UnitType.CUBIC_METERS, 100, 8.9391068044481),
             (UnitType.KWH, UnitType.KWH, 100, 100),
             (UnitType.CUBIC_METERS, UnitType.CUBIC_METERS, 100, 100),
+            (None, None, 100, 100),
         ]:
             self.assertEqual(_calculate_unit(test[2], test[0], test[1]), test[3])
+
+    def test_page_reference(self):
+        with self.subTest("Page that does not exist in the response returns None"):
+            response = {}
+            self.assertIsNone(_get_page_reference(response, "next"))
+
+        with self.subTest("The page has no value in the response returns None"):
+            response = {
+                "next": None,
+            }
+            self.assertIsNone(_get_page_reference(response, "next"))
+
+        with self.subTest("page url with no arguments returns None"):
+            response = {
+                "next": "http://octopus.energy",
+            }
+            self.assertIsNone(_get_page_reference(response, "next"))
+
+        with self.subTest("period from extracted from url"):
+            response = {
+                "next": "http://octopus.energy?period_from=2020-01-01",
+            }
+            self.assertEqual(
+                _get_page_reference(response, "next").options["period_from"],
+                datetime(year=2020, month=1, day=1),
+            )
+
+        with self.subTest("period to extracted from url"):
+            response = {
+                "next": "http://octopus.energy?period_to=2020-01-01",
+            }
+            self.assertEqual(
+                _get_page_reference(response, "next").options["period_to"],
+                datetime(year=2020, month=1, day=1),
+            )
+
+        with self.subTest("order extracted from url"):
+            response = {
+                "next": f"http://octopus.energy?order={SortOrder.NEWEST_FIRST.value}",
+            }
+            self.assertEqual(
+                _get_page_reference(response, "next").options["order"], SortOrder.NEWEST_FIRST
+            )
+
+        with self.subTest("group by extracted from url"):
+            response = {
+                "next": f"http://octopus.energy?group_by={Aggregate.QUARTER.value}",
+            }
+            self.assertEqual(
+                _get_page_reference(response, "next").options["group_by"], Aggregate.QUARTER
+            )
+
+        with self.subTest("arguments with no special handling are stored in raw form"):
+            response = {
+                "next": "http://octopus.energy?some_arg=some_value",
+            }
+            self.assertEqual(
+                _get_page_reference(response, "next").options["some_arg"], "some_value"
+            )

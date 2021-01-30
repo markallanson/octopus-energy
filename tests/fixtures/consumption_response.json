@@ -1,7 +1,7 @@
 {
   "count": 48,
-  "next": null,
-  "previous": null,
+  "next": "https://api.octopus.energy?order=period&page=3&period_from=2021-01-03T12%3A18%3A15&period_to=2021-01-23T12%3A18%3A15",
+  "previous": "https://api.octopus.energy?order=period&page=1&period_from=2021-01-03T12%3A18%3A15&period_to=2021-01-23T12%3A18%3A15",
   "results": [
     {
       "consumption": 0.063,

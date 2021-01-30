@@ -17,6 +17,13 @@ class _DocEnum(Enum):
 
 
 @dataclass
+class PageReference:
+    """Represents a reference to a page of information for API calls that support paging"""
+
+    options: dict
+
+
+@dataclass
 class Tariff:
     code: str
     valid_from: datetime
@@ -64,9 +71,6 @@ class MeterGeneration(Enum):
         """A description, in english, of the meter."""
         return self.value[2]
 
-    def __eq__(self, other):
-        return self.value == other.value
-
 
 class EnergyType(Enum):
     """Represents a type of energy."""
@@ -95,11 +99,12 @@ class Address:
     def __str__(self):
         """Gets a single line string representation of the address"""
         return (
-            f"{self.line_1} "
-            f"{self.line_2 + ', ' if self.line_2 is not None else ''} "
-            f"{self.line_3 + ', ' if self.line_3 is not None else ''}"
-            f"{self.county + ', ' if self.county is not None else ''}"
-            f"{self.town + ', ' if self.town is not None else ''}"
+            f"{self.line_1}"
+            f"{', ' + self.line_2 if self.line_2 is not None else ''}"
+            f"{', ' + self.line_3 if self.line_3 is not None else ''}"
+            f"{', ' + self.county if self.county is not None else ''}"
+            f"{', ' + self.town if self.town is not None else ''}"
+            f"{', ' + self.postcode if self.postcode is not None else ''}"
         )
 
 
@@ -165,6 +170,8 @@ class Consumption:
     unit_type: UnitType
     meter: Meter
     intervals: List[IntervalConsumption] = field(default_factory=lambda: [])
+    previous_page: Optional[PageReference] = None
+    next_page: Optional[PageReference] = None
 
 
 class EnergyTariffType(_DocEnum):

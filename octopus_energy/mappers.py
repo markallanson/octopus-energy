@@ -1,9 +1,9 @@
-from typing import List, Optional
-
 from datetime import datetime
+from typing import List, Optional
 
 import dateutil
 from dateutil.parser import isoparse
+from furl import furl
 
 from .models import (
     IntervalConsumption,
@@ -18,6 +18,9 @@ from .models import (
     Meter,
     Address,
     MeterPoint,
+    PageReference,
+    SortOrder,
+    Aggregate,
 )
 
 _CUBIC_METERS_TO_KWH_MULTIPLIER = 11.1868
@@ -103,7 +106,7 @@ def meters_from_response(response: dict) -> List[Meter]:
 
 
 def consumption_from_response(
-    response: dict, meter: Meter, desired_unit_type: UnitType
+    response: dict, meter: Meter, desired_unit_type: UnitType = None
 ) -> Consumption:
     """Generates the Consumption model from an octopus energy API response.
 
@@ -132,10 +135,33 @@ def consumption_from_response(
             )
             for result in response["results"]
         ],
+        _get_page_reference(response, "previous"),
+        _get_page_reference(response, "next"),
     )
 
 
-def _calculate_unit(consumption, actual_unit, desired_unit):
+def _get_page_reference(response: dict, page: str):
+    if page not in response:
+        return None
+    page_url = furl(response[page])
+    if not page_url.args:
+        return None
+
+    # Convert all args in the page reference to the types used by the APIs
+    args = dict(page_url.args)
+    if "period_from" in args:
+        args["period_from"] = from_timestamp_str(args["period_from"])
+    if "period_to" in args:
+        args["period_to"] = from_timestamp_str(args["period_to"])
+    if "order" in args:
+        args["order"] = SortOrder(args["order"])
+    if "group_by" in args:
+        args["group_by"] = Aggregate(args["group_by"])
+
+    return PageReference(args)
+
+
+def _calculate_unit(consumption, actual_unit, desired_unit: UnitType = None):
     """Converts unit values from one unit to another unit.
 
     If no mapping is available the value is returned unchanged.
@@ -145,4 +171,8 @@ def _calculate_unit(consumption, actual_unit, desired_unit):
     :param desired_unit: The unit the convert the consumption to.
     :return: The consumption converted to the desired unit.
     """
-    return consumption * _UNIT_MULTIPLIERS.get((actual_unit.value, desired_unit.value), 1)
+    return (
+        consumption
+        if not desired_unit
+        else consumption * _UNIT_MULTIPLIERS.get((actual_unit.value, desired_unit.value), 1)
+    )

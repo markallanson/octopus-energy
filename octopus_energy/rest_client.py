@@ -112,24 +112,24 @@ class OctopusEnergyRestClient:
         self,
         mpan: str,
         serial_number: str,
-        page_num: int = None,
+        page: int = None,
         page_size: int = None,
         period_from: datetime = None,
         period_to: datetime = None,
         order: SortOrder = None,
-        aggregate: Aggregate = None,
+        group_by: Aggregate = None,
     ) -> dict:
         """Gets the consumption of electricity from a specific meter.
 
         Args:
             mpan: The MPAN (Meter Point Administration Number) of the location to query.
             serial_number: The serial number of the meter to query.
-            page_num: (Optional) The page number to load.
+            page: (Optional) The page number to load.
             page_size: (Optional) How many results per page.
             period_from: (Optional) The timestamp from where to begin returning results.
             period_to: (Optional) The timestamp at which to end returning results.
             order: (Optional) The ordering to apply to the results.
-            aggregate: (Optional) Over what period to aggregate the results. By default consumption
+            group_by: (Optional) Over what period to aggregate the results. By default consumption
                        results are aggregated half hourly. You can override this setting by
                        explicitly stating an alternate aggregate.
         Returns:
@@ -139,12 +139,12 @@ class OctopusEnergyRestClient:
         return await self._get(
             ["v1", "electricity-meter-points", mpan, "meters", serial_number, "consumption"],
             {
-                "page": page_num,
+                "page": page,
                 "page_size": page_size,
                 "period_from": to_timestamp_str(period_from),
                 "period_to": to_timestamp_str(period_to),
                 "order": order.value if order is not None else None,
-                "group_by": aggregate.value if aggregate is not None else None,
+                "group_by": group_by.value if group_by is not None else None,
             },
         )
 
@@ -164,24 +164,24 @@ class OctopusEnergyRestClient:
         self,
         mprn: str,
         serial_number: str,
-        page_num: int = None,
+        page: int = None,
         page_size: int = None,
         period_from: datetime = None,
         period_to: datetime = None,
         order: SortOrder = None,
-        aggregate: Aggregate = None,
+        group_by: Aggregate = None,
     ) -> dict:
         """Gets the consumption of gas from a specific meter.
 
         Args:
             mprn: The MPRN (Meter Point Reference Number) of the location to query.
             serial_number: The serial number of the meter to query.
-            page_num: (Optional) The page number to load.
+            page: (Optional) The page number to load.
             page_size: (Optional) How many results per page.
             period_from: (Optional) The timestamp from where to begin returning results.
             period_to: (Optional) The timestamp at which to end returning results.
             order: (Optional) The ordering to apply to the results.
-            aggregate: (Optional) Over what period to aggregate the results. By default consumption
+            group_by: (Optional) Over what period to aggregate the results. By default consumption
                        results are aggregated half hourly. You can override this setting by
                        explicitly stating an alternate aggregate.
         Returns:
@@ -191,18 +191,18 @@ class OctopusEnergyRestClient:
         return await self._get(
             ["v1", "gas-meter-points", mprn, "meters", serial_number, "consumption"],
             {
-                "page": page_num,
+                "page": page,
                 "page_size": page_size,
                 "period_from": to_timestamp_str(period_from),
                 "period_to": to_timestamp_str(period_to),
                 "order": order.value if order is not None else None,
-                "group_by": aggregate.value if aggregate is not None else None,
+                "group_by": group_by.value if group_by is not None else None,
             },
         )
 
     async def get_products_v1(
         self,
-        page_num: int = None,
+        page: int = None,
         page_size: int = None,
         is_variable: bool = None,
         is_green: bool = None,
@@ -214,7 +214,7 @@ class OctopusEnergyRestClient:
         """Gets octopus energy products.
 
         Args:
-            page_num: (Optional) The page number to load.
+            page: (Optional) The page number to load.
             page_size: (Optional) How many results per page.
             is_variable (Optional): Activate filter and include variable products in the results.
             is_green (Optional): Activate filter and include green products in the results.
@@ -232,7 +232,7 @@ class OctopusEnergyRestClient:
         return await self._get(
             ["v1", "products"],
             {
-                "page": page_num,
+                "page": page,
                 "page_size": page_size,
                 "is_variable": is_variable,
                 "is_green": is_green,
