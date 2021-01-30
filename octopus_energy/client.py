@@ -1,7 +1,15 @@
+from datetime import datetime
 from typing import List
 
-from .mappers import meters_from_response
-from octopus_energy import Meter, OctopusEnergyRestClient
+from .mappers import meters_from_response, consumption_from_response
+from octopus_energy import (
+    Meter,
+    OctopusEnergyRestClient,
+    Consumption,
+    EnergyType,
+    SortOrder,
+    PageReference,
+)
 
 
 class OctopusEnergyConsumerClient:
@@ -49,3 +57,45 @@ class OctopusEnergyConsumerClient:
     async def get_meters(self) -> List[Meter]:
         """Gets all meters associated with your account."""
         return meters_from_response(await self.rest_client.get_account_details(self.account_number))
+
+    async def get_consumption(
+        self,
+        meter: Meter,
+        period_from: datetime = None,
+        period_to: datetime = None,
+        page_reference: PageReference = None,
+    ) -> Consumption:
+        """Get the energy consumption for a meter
+
+        Args:
+            meter: The meter to get consumption for.
+            period_from: The timestamp for the earliest period of consumption to return.
+            period_to: The timestamp for the latest period of consumption to return.
+            page_reference: Get a specific page of results based on a page reference returned by
+                            a previous call to get_consumption
+
+        Returns:
+            The consumption for the meter in the time period specified. The results are returned
+            in ascending timestamp order from the start of the period.
+
+        """
+        func = (
+            self.rest_client.get_electricity_consumption_v1
+            if meter.energy_type == EnergyType.ELECTRICITY
+            else self.rest_client.get_gas_consumption_v1
+        )
+
+        params = {}
+        if page_reference:
+            params.update(page_reference.options)
+        else:
+            params.update(
+                {
+                    "period_from": period_from,
+                    "period_to": period_to,
+                    "order": SortOrder.OLDEST_FIRST,
+                }
+            )
+
+        response = await func(meter.meter_point.id, meter.serial_number, **params)
+        return consumption_from_response(response, meter)

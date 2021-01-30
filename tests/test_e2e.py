@@ -63,12 +63,12 @@ class E2eTestCase(TestCase):
             return await client.get_electricity_consumption_v1(
                 "mpan",
                 "serial_number",
-                page_num=1,
+                page=1,
                 page_size=10,
                 period_from=datetime.now(tz=tzoffset("CEST", 2)),
                 period_to=datetime.now(tz=tzoffset("CEST", 2)),
                 order=SortOrder.NEWEST_FIRST,
-                aggregate=Aggregate.DAY,
+                group_by=Aggregate.DAY,
             )
 
         await self._run_get_test(
@@ -101,12 +101,12 @@ class E2eTestCase(TestCase):
             return await client.get_gas_consumption_v1(
                 "mprn",
                 "serial_number",
-                page_num=1,
+                page=1,
                 page_size=10,
                 period_from=datetime.now(tz=tzoffset("CEST", 2)),
                 period_to=datetime.now(tz=tzoffset("CEST", 2)),
                 order=SortOrder.NEWEST_FIRST,
-                aggregate=Aggregate.DAY,
+                group_by=Aggregate.DAY,
             )
 
         await self._run_get_test(
@@ -124,7 +124,7 @@ class E2eTestCase(TestCase):
     async def test_get_products_v1(self, mock_aioresponses: aioresponses):
         async def get(client):
             return await client.get_products_v1(
-                page_num=1,
+                page=1,
                 page_size=10,
                 is_business=True,
                 is_green=True,
