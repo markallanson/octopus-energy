@@ -18,6 +18,7 @@ from .models import (
     ElectricityMeter,
     GasMeter,
     PageReference,
+    TariffRate,
 )
 from .exceptions import ApiAuthenticationError, ApiError, ApiNotFoundError, ApiBadRequestError
 from .rest_client import OctopusEnergyRestClient
@@ -47,4 +48,5 @@ __all__ = [
     "ElectricityMeter",
     "GasMeter",
     "PageReference",
+    "TariffRate",
 ]

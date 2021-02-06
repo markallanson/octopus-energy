@@ -1,0 +1,288 @@
+[
+  {
+    "py/object": "octopus_energy.models.TariffRate",
+    "cost_inc_vat": {
+      "py/reduce": [
+        {
+          "py/type": "decimal.Decimal"
+        },
+        {
+          "py/tuple": [
+            "20.640"
+          ]
+        }
+      ]
+    },
+    "cost_exc_vat": {
+      "py/reduce": [
+        {
+          "py/type": "decimal.Decimal"
+        },
+        {
+          "py/tuple": [
+            "21.672"
+          ]
+        }
+      ]
+    },
+    "valid_from": {
+      "py/object": "datetime.datetime",
+      "__reduce__": [
+        {
+          "py/type": "datetime.datetime"
+        },
+        [
+          "B+QLAQAAAAAAAA==",
+          {
+            "py/reduce": [
+              {
+                "py/function": "copyreg._reconstructor"
+              },
+              {
+                "py/tuple": [
+                  {
+                    "py/type": "dateutil.tz.tz.tzutc"
+                  },
+                  {
+                    "py/type": "datetime.tzinfo"
+                  },
+                  {
+                    "py/reduce": [
+                      {
+                        "py/type": "datetime.tzinfo"
+                      },
+                      {
+                        "py/tuple": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      ]
+    },
+    "valid_to": null
+  },
+  {
+    "py/object": "octopus_energy.models.TariffRate",
+    "cost_inc_vat": {
+      "py/reduce": [
+        {
+          "py/type": "decimal.Decimal"
+        },
+        {
+          "py/tuple": [
+            "18.460"
+          ]
+        }
+      ]
+    },
+    "cost_exc_vat": {
+      "py/reduce": [
+        {
+          "py/type": "decimal.Decimal"
+        },
+        {
+          "py/tuple": [
+            "19.382"
+          ]
+        }
+      ]
+    },
+    "valid_from": {
+      "py/object": "datetime.datetime",
+      "__reduce__": [
+        {
+          "py/type": "datetime.datetime"
+        },
+        [
+          "B+MEHhcAAAAAAA==",
+          {
+            "py/id": 5
+          }
+        ]
+      ]
+    },
+    "valid_to": {
+      "py/object": "datetime.datetime",
+      "__reduce__": [
+        {
+          "py/type": "datetime.datetime"
+        },
+        [
+          "B+QLAQAAAAAAAA==",
+          {
+            "py/id": 5
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "py/object": "octopus_energy.models.TariffRate",
+    "cost_inc_vat": {
+      "py/reduce": [
+        {
+          "py/type": "decimal.Decimal"
+        },
+        {
+          "py/tuple": [
+            "18.460"
+          ]
+        }
+      ]
+    },
+    "cost_exc_vat": {
+      "py/reduce": [
+        {
+          "py/type": "decimal.Decimal"
+        },
+        {
+          "py/tuple": [
+            "19.382"
+          ]
+        }
+      ]
+    },
+    "valid_from": {
+      "py/object": "datetime.datetime",
+      "__reduce__": [
+        {
+          "py/type": "datetime.datetime"
+        },
+        [
+          "B+ILFAAAAAAAAA==",
+          {
+            "py/id": 5
+          }
+        ]
+      ]
+    },
+    "valid_to": {
+      "py/object": "datetime.datetime",
+      "__reduce__": [
+        {
+          "py/type": "datetime.datetime"
+        },
+        [
+          "B+MEHhcAAAAAAA==",
+          {
+            "py/id": 5
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "py/object": "octopus_energy.models.TariffRate",
+    "cost_inc_vat": {
+      "py/reduce": [
+        {
+          "py/type": "decimal.Decimal"
+        },
+        {
+          "py/tuple": [
+            "18.460"
+          ]
+        }
+      ]
+    },
+    "cost_exc_vat": {
+      "py/reduce": [
+        {
+          "py/type": "decimal.Decimal"
+        },
+        {
+          "py/tuple": [
+            "19.382"
+          ]
+        }
+      ]
+    },
+    "valid_from": {
+      "py/object": "datetime.datetime",
+      "__reduce__": [
+        {
+          "py/type": "datetime.datetime"
+        },
+        [
+          "B+IIBRcAAAAAAA==",
+          {
+            "py/id": 5
+          }
+        ]
+      ]
+    },
+    "valid_to": {
+      "py/object": "datetime.datetime",
+      "__reduce__": [
+        {
+          "py/type": "datetime.datetime"
+        },
+        [
+          "B+ILFAAAAAAAAA==",
+          {
+            "py/id": 5
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "py/object": "octopus_energy.models.TariffRate",
+    "cost_inc_vat": {
+      "py/reduce": [
+        {
+          "py/type": "decimal.Decimal"
+        },
+        {
+          "py/tuple": [
+            "18.000"
+          ]
+        }
+      ]
+    },
+    "cost_exc_vat": {
+      "py/reduce": [
+        {
+          "py/type": "decimal.Decimal"
+        },
+        {
+          "py/tuple": [
+            "18.899"
+          ]
+        }
+      ]
+    },
+    "valid_from": {
+      "py/object": "datetime.datetime",
+      "__reduce__": [
+        {
+          "py/type": "datetime.datetime"
+        },
+        [
+          "B+EBCwoAAAAAAA==",
+          {
+            "py/id": 5
+          }
+        ]
+      ]
+    },
+    "valid_to": {
+      "py/object": "datetime.datetime",
+      "__reduce__": [
+        {
+          "py/type": "datetime.datetime"
+        },
+        [
+          "B+IIBRcAAAAAAA==",
+          {
+            "py/id": 5
+          }
+        ]
+      ]
+    }
+  }
+]

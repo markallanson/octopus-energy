@@ -12,6 +12,7 @@ from octopus_energy.mappers import (
     to_timestamp_str,
     meters_from_response,
     _get_page_reference,
+    tariff_rates_from_response,
 )
 from octopus_energy.models import UnitType, MeterGeneration, SortOrder, Aggregate
 from tests import load_fixture_json, load_json
@@ -19,6 +20,10 @@ from tests import load_fixture_json, load_json
 
 def load_mapping_response_json(filename: str) -> dict:
     return jsonpickle.decode(load_json(os.path.join("mapping_results", filename)))
+
+
+def _gen_mapping_response_json(obj) -> dict:
+    print(jsonpickle.encode(obj))
 
 
 class TestAccountMappers(TestCase):
@@ -31,6 +36,21 @@ class TestAccountMappers(TestCase):
         meters = meters_from_response(load_fixture_json("account_response.json"))
         expected_response = load_mapping_response_json("account_mapping.json")
         self.assertCountEqual(meters, expected_response)
+
+
+class TestTariffMappers(TestCase):
+    def __init__(self, methodName: str = ...) -> None:
+        super().__init__(methodName)
+        self.maxDiff = None
+
+    def test_rate_mapping(self):
+        """Verifies that the result of mapping a known input produces a known output."""
+        rates = tariff_rates_from_response(load_fixture_json("get_tariff_response.json"))
+        expected_response = load_mapping_response_json("tariff_rate_mapping.json")
+        self.assertCountEqual(rates, expected_response)
+
+    def test_no_results(self):
+        self.assertEqual([], tariff_rates_from_response({}))
 
 
 class TestConsumptionMappers(TestCase):
