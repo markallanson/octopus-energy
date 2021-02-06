@@ -30,6 +30,14 @@ class Tariff:
     valid_to: Optional[datetime]
 
 
+@dataclass
+class TariffRate:
+    cost_inc_vat: Decimal
+    cost_exc_vat: Decimal
+    valid_from: datetime
+    valid_to: Optional[datetime]
+
+
 class UnitType(Enum):
     """Units of energy measurement."""
 

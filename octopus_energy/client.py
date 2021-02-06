@@ -1,7 +1,7 @@
-from datetime import datetime
-from typing import List
+from datetime import datetime, timedelta
+from typing import List, Optional
 
-from .mappers import meters_from_response, consumption_from_response
+from .mappers import meters_from_response, consumption_from_response, tariff_rates_from_response
 from octopus_energy import (
     Meter,
     OctopusEnergyRestClient,
@@ -9,6 +9,9 @@ from octopus_energy import (
     EnergyType,
     SortOrder,
     PageReference,
+    EnergyTariffType,
+    RateType,
+    TariffRate,
 )
 
 
@@ -25,14 +28,12 @@ class OctopusEnergyConsumerClient:
     This client uses async i/o.
     """
 
-    def __init__(self, account_number: str, api_token: str):
+    def __init__(self, api_token: Optional[str] = None):
         """Initializes the Octopus Energy Consumer Client.
 
         Args:
-            account_number: Your Octopus Energy Account Number.
             api_token: Your Octopus Energy API Key.
         """
-        self.account_number = account_number
         self.rest_client = OctopusEnergyRestClient(api_token)
 
     def __enter__(self):
@@ -54,9 +55,13 @@ class OctopusEnergyConsumerClient:
         """
         await self.rest_client.close()
 
-    async def get_meters(self) -> List[Meter]:
-        """Gets all meters associated with your account."""
-        return meters_from_response(await self.rest_client.get_account_details(self.account_number))
+    async def get_meters(self, account_number: str) -> List[Meter]:
+        """Gets all meters associated with your account.
+
+        Args:
+            account_number: Your Octopus Energy Account Number.
+        """
+        return meters_from_response(await self.rest_client.get_account_details(account_number))
 
     async def get_consumption(
         self,
@@ -99,3 +104,36 @@ class OctopusEnergyConsumerClient:
 
         response = await func(meter.meter_point.id, meter.serial_number, **params)
         return consumption_from_response(response, meter)
+
+    async def get_tariff_cost(
+        self,
+        product_code: str,
+        tariff_code: str,
+        tariff_type: EnergyTariffType,
+        rate_type: RateType,
+        timestamp: datetime,
+    ) -> Optional[TariffRate]:
+        """Gets the cost of a tariff cost at a point in time.
+
+        Args:
+            product_code: The product code.
+            tariff_code: The tariff code.
+            tariff_type: The type of energy within the tariff.
+            rate_type: The type of rate.
+            timestamp: The timestamp
+
+        Returns:
+            The cost per unit of energy for the requested rate at a point in time.
+
+        """
+        response = await self.rest_client.get_tariff_v1(
+            product_code,
+            tariff_type,
+            tariff_code,
+            rate_type,
+            period_from=timestamp,
+            # Add a millisecond as the API doesn't like requests with the same start and end
+            period_to=timestamp + timedelta(seconds=1),
+        )
+        rates = tariff_rates_from_response(response)
+        return None if not rates else rates[0]

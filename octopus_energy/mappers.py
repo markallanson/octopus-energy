@@ -1,4 +1,5 @@
 from datetime import datetime
+from decimal import Decimal, ROUND_DOWN
 from typing import List, Optional
 
 import dateutil
@@ -21,6 +22,7 @@ from .models import (
     PageReference,
     SortOrder,
     Aggregate,
+    TariffRate,
 )
 
 _CUBIC_METERS_TO_KWH_MULTIPLIER = 11.1868
@@ -29,6 +31,7 @@ _UNIT_MULTIPLIERS = {
     (UnitType.KWH.value, UnitType.CUBIC_METERS.value): (1 / _CUBIC_METERS_TO_KWH_MULTIPLIER),
     (UnitType.CUBIC_METERS.value, UnitType.KWH.value): _CUBIC_METERS_TO_KWH_MULTIPLIER,
 }
+_QUANT_3DP = Decimal("0.001")
 
 
 def to_timestamp_str(timestamp: datetime) -> str:
@@ -52,6 +55,8 @@ def from_timestamp_str(timestamp: str) -> Optional[datetime]:
     Returns:
         The timestamp as a datetime object.
     """
+    if timestamp is None:
+        return None
     return dateutil.parser.isoparse(timestamp) if timestamp else None
 
 
@@ -138,6 +143,29 @@ def consumption_from_response(
         _get_page_reference(response, "previous"),
         _get_page_reference(response, "next"),
     )
+
+
+def tariff_rates_from_response(response: dict) -> List[TariffRate]:
+    """Generates the list of tariff rates from an octopus energy API response.
+
+    Args:
+        response: The API response object.
+
+    Returns:
+        The List containing the rates for a specific tariff
+
+    """
+    if "results" not in response:
+        return []
+    return [
+        TariffRate(
+            Decimal(result["value_exc_vat"]).quantize(_QUANT_3DP, rounding=ROUND_DOWN),
+            Decimal(result["value_inc_vat"]).quantize(_QUANT_3DP, rounding=ROUND_DOWN),
+            from_timestamp_str(result["valid_from"]),
+            from_timestamp_str(result.get("valid_to", None)),
+        )
+        for result in response["results"]
+    ]
 
 
 def _get_page_reference(response: dict, page: str):
