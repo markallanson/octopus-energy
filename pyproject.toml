@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "octopus-energy"
-version = "0.1.12"
+version = "0.1.13"
 description = "Python client for the Octopus Energy RESTful API"
 authors = ["Mark Allanson <mark@allanson.org>"]
 license = "MIT"

@@ -159,8 +159,8 @@ def tariff_rates_from_response(response: dict) -> List[TariffRate]:
         return []
     return [
         TariffRate(
-            Decimal(result["value_exc_vat"]).quantize(_QUANT_3DP, rounding=ROUND_DOWN),
             Decimal(result["value_inc_vat"]).quantize(_QUANT_3DP, rounding=ROUND_DOWN),
+            Decimal(result["value_exc_vat"]).quantize(_QUANT_3DP, rounding=ROUND_DOWN),
             from_timestamp_str(result["valid_from"]),
             from_timestamp_str(result.get("valid_to", None)),
         )
