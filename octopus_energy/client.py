@@ -120,7 +120,7 @@ class OctopusEnergyConsumerClient:
             tariff_code: The tariff code.
             tariff_type: The type of energy within the tariff.
             rate_type: The type of rate.
-            timestamp: The timestamp
+            timestamp: The timestamp.
 
         Returns:
             The cost per unit of energy for the requested rate at a point in time.
@@ -137,3 +137,41 @@ class OctopusEnergyConsumerClient:
         )
         rates = tariff_rates_from_response(response)
         return None if not rates else rates[0]
+
+    async def get_daily_flexible_rate_pricing(
+        self,
+        product_code: str,
+        tariff_code: str,
+        tariff_type: EnergyTariffType,
+        rate_type: RateType,
+        timestamp: datetime,
+    ) -> List[TariffRate]:
+        """Gets the cost of a flexible rate tariff for each half hour interval on a specific day.
+
+        Note that this will yield indeterminate/meaningless results for standard but it may work,
+        OK for "go" tariffs which do change price during the course of the day.
+
+        Args:
+            product_code: The product code.
+            tariff_code: The tariff code.
+            tariff_type: The type of energy within the tariff.
+            rate_type: The type of rate.
+            timestamp: The timestamp whose date portion will be used to determine which day to
+                       get the pricing for. The start date will be the truncated date time, and
+                       the end period will be midnight on the truncated date time.
+
+        Returns:
+            The cost per unit of energy for the requested rate for the day requested.
+
+        """
+        period_from = datetime(year=timestamp.year, month=timestamp.month, day=timestamp.day)
+        response = await self.rest_client.get_tariff_v1(
+            product_code,
+            tariff_type,
+            tariff_code,
+            rate_type,
+            period_from=period_from,
+            period_to=period_from + timedelta(days=1),
+        )
+        rates = tariff_rates_from_response(response)
+        return rates
