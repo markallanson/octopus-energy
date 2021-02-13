@@ -121,3 +121,33 @@ class ClientTestCase(TestCase):
                 )
             with self.subTest("returns the result of mapping"):
                 self.assertIsNotNone(response)
+
+    @does_asyncio
+    @patch("octopus_energy.client.OctopusEnergyRestClient", autospec=True)
+    @patch("octopus_energy.client.tariff_rates_from_response", autospec=True)
+    async def test_get_daily_agile_pricing(self, mock_mapper: Mock, mock_rest_client: Mock):
+        product_code = "pc"
+        tariff_code = "tc"
+        tariff_type = EnergyTariffType.ELECTRICITY
+        rate_type = RateType.STANDARD_UNIT_RATES
+        timestamp = datetime.utcnow()
+        async with OctopusEnergyConsumerClient("") as client:
+            response = await client.get_daily_flexible_rate_pricing(
+                product_code, tariff_code, tariff_type, rate_type, timestamp
+            )
+            with self.subTest("calls get_tariff_v1 on rest client"):
+                mock_rest_client.return_value.get_tariff_v1.assert_called_with(
+                    product_code,
+                    tariff_type,
+                    tariff_code,
+                    rate_type,
+                    period_from=datetime(
+                        year=timestamp.year, month=timestamp.month, day=timestamp.day
+                    ),
+                    period_to=datetime(
+                        year=timestamp.year, month=timestamp.month, day=timestamp.day
+                    )
+                    + timedelta(days=1),
+                )
+            with self.subTest("returns the result of mapping"):
+                self.assertIsNotNone(response)

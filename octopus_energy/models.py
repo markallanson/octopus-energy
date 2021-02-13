@@ -141,15 +141,7 @@ class Meter:
         """Gets the tariff in effect on a meter at a specific date/time.
 
         This automatically takes into account open ended tariffs that have no end."""
-        return next(
-            (
-                tariff
-                for tariff in self.tariffs
-                if timestamp >= tariff.valid_from
-                and (not tariff.valid_to or timestamp < tariff.valid_to)
-            ),
-            None,
-        )
+        return get_tariff_at(self.tariffs, timestamp)
 
 
 @dataclass
@@ -249,4 +241,19 @@ class Aggregate(_DocEnum):
     QUARTER = (
         "quarter",
         "Aggregate consumption quarterly",
+    )
+
+
+def get_tariff_at(tariffs: List[Tariff], timestamp: datetime):
+    """Gets the tariff in effect on a meter at a specific date/time.
+
+    This automatically takes into account open ended tariffs that have no end."""
+    return next(
+        (
+            tariff
+            for tariff in tariffs
+            if timestamp >= tariff.valid_from
+            and (not tariff.valid_to or timestamp < tariff.valid_to)
+        ),
+        None,
     )

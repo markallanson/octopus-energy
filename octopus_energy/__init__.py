@@ -1,6 +1,7 @@
 """Python client for the Octopus Energy RESTful API"""
 
 from .models import (
+    get_tariff_at,
     Address,
     Aggregate,
     Consumption,
@@ -49,4 +50,5 @@ __all__ = [
     "GasMeter",
     "PageReference",
     "TariffRate",
+    "get_tariff_at",
 ]
